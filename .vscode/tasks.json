@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "tasks": [
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "tsc --resolveJsonModule --esModuleInterop --moduleResolution node16 --module node16 --target es6; node ./test.js",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+For lists of words (names) use the regex:
+(\S+)
+replace with "$1",
