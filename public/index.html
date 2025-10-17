@@ -10,28 +10,30 @@
 
 <body>
     <div id="title">
-        <h1>Your Challenge:</h1>
+        <h1>Monster Randomizer:</h1>
+        <p> 4 survivors sit around a fire in the plain of faces, they either hunt or are hunted. </p>
     </div>
     <div id="details">
         <form>
             <fieldset>
-                <legend> Select your tier </legend>
+                <h2> Survey The Camp </h2>
                 <div>
                     <input title="Survivors Just Starting Out" type="radio" id="0" name="tier" value="0" checked />
-                    <label for="0">0</label>
+                    <label for="0">Survivors with ink still in their eyes</label>
                 </div>
                 <div>
                     <input title="Fighting Basic Monsters With Some Equipment" type="radio" id="1" name="tier"
                         value="1" />
-                    <label for="0">1</label>
+                    <label for="1">Survivors with scavenged equipment</label>
                 </div>
                 <div>
-                    <input title="Survivors with heat" type="radio" id="2" name="tier" value="2" />
-                    <label for="0">2</label>
+                    <input title="Survivors with heat and other early game milestones done" type="radio" id="2"
+                        name="tier" value="2" />
+                    <label for="2">Survivors who command fire</label>
                 </div>
                 <div>
-                    <input title="Fighting Anything" type="radio" id="3" name="tier" value="3" />
-                    <label for="0">3</label>
+                    <input title="Anything goes" type="radio" id="3" name="tier" value="3" />
+                    <label for="3">Veterans with an assortment of grand gear</label>
                 </div>
                 <div>
                     <button type="generate">Generate</button>
@@ -40,20 +42,20 @@
         </form>
 
         <div id="gear" class="info">
-            <h2>Gear</h2>
+            <h2>They Carry</h2>
             <p id="gearDetails"></p>
         </div>
         <div id="monster" class="info">
-            <h2>Monster</h2>
+            <h2>They Hunt</h2>
             <p id="monsterDetails"></p>
         </div>
         <div id="characters" class="info">
-            <h2>Survivors</h2>
+            <h2>They Are</h2>
             <p id="survivorDetails"></p>
         </div>
 
         <div id="settlement" class="info">
-            <h2>Settlement</h2>
+            <h2>Their Camp Provides</h2>
             <p id="settlementDetails"></p>
         </div>
     </div>

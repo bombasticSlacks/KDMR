@@ -435,15 +435,30 @@ function generateSettlementDetails(selectedTier: number): SettlementInfo {
 }
 
 export function formatSettlementDetails(c: SettlementInfo): string {
-  let settlement = "Settlement with: \n";
-  settlement += `Max Survival: ${c.maxSurvival}\n`;
-  settlement += `Starting Survival: ${c.startingSurvival}\n`;
-  settlement += `Weapon Proficiencies: ${c.weaponProficiencies}\n`;
-  settlement += `Weapon Masteries: ${c.weaponMasteries}\n`;
-  if (c.encourage) settlement += `Can encourage\n`;
-  if (c.dodge) settlement += `Can dodge\n`;
-  if (c.surge) settlement += `Can surge\n`;
-  if (c.dash) settlement += `Can dash\n`;
+  let settlement = `<div class="flex">`;
+
+  settlement += settlementHelper("Max Survival:", c.maxSurvival);
+  settlement += settlementHelper("Starting Survival:", c.startingSurvival);
+  settlement += settlementHelper(
+    "Weapon Proficiencies:",
+    c.weaponProficiencies
+  );
+  settlement += settlementHelper("Weapon Masteries:", c.weaponMasteries);
+
+  if (c.encourage) settlement += settlementHelperCheck("Encourage");
+  if (c.dodge) settlement += settlementHelperCheck("Dodge");
+  if (c.surge) settlement += settlementHelperCheck("Surge");
+  if (c.dash) settlement += settlementHelperCheck("Dash");
+
+  settlement += `</div>`;
 
   return settlement;
+}
+
+function settlementHelper(title: string, val: number): string {
+  return `<div class=settlementAttribute><h3 class=settlementTitle>${title}</h3><p class=settlementValue>${val}</p></div>`;
+}
+
+function settlementHelperCheck(title: string): string {
+  return `<div class=settlementAttribute><h3 class=settlementTitle>${title}</h3><p class=settlementValue>✓</p></div>`;
 }

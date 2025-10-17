@@ -1,10 +1,12 @@
 * {
   background-color: #1d1d1d;
   color: whitesmoke;
+  font-family: "Courier New", Courier;
 }
 
 #details,
-#endeavors {
+#endeavors,
+.flex {
   display: flex;
   flex-wrap: wrap;
 }
@@ -37,6 +39,20 @@ form,
   width: fit-content;
   padding: 2em;
   margin: 1em;
+  max-width: 30%;
+}
+
+.settlementTitle,
+.settlementValue {
+  text-align: center;
+  background-color: transparent;
+  margin: 0.5em;
+}
+
+.settlementAttribute {
+  border: solid;
+  border-radius: 1em;
+  width: fit-content;
 }
 
 fieldset {
