@@ -21,5 +21,9 @@
     "body": [
       "{ name: \"$1\", type: [\"${2|Accessory,Weapon,Armour,Support,Tank|}\"], tier: $3 },"
     ]
+  },
+  "monster details": {
+    "prefix": ["mo"],
+    "body": ["{ name: \"$1\", tier: [$2, $3, $4] },"]
   }
 }
