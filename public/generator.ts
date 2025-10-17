@@ -2,10 +2,11 @@
 import { items } from "./data/Items.js";
 import { monsters } from "./data/Monsters.js";
 
-interface item {
+interface Item {
   name: string;
   type: string[];
   tier: number;
+  location: string;
 }
 
 interface monster {
@@ -14,11 +15,34 @@ interface monster {
 }
 
 interface ItemsType {
-  Armour: item[];
-  Accessory: item[];
-  Support: item[];
-  Weapon: item[];
-  Tank: item[];
+  Armour: Item[];
+  Accessory: Item[];
+  Support: Item[];
+  Weapon: Item[];
+  Tank: Item[];
+  Blacklist: Item[];
+}
+
+interface SettlementInfo {
+  maxSurvival: number;
+  startingSurvival: number;
+  weaponProficiencies: number;
+  weaponMasteries: number;
+  encourage: boolean;
+  dodge: boolean;
+  surge: boolean;
+  dash: boolean;
+}
+
+interface CharacterInfo {
+  strength: number;
+  evasion: number;
+  accuracy: number;
+  luck: number;
+  movement: number;
+  speed: number;
+  fa: number;
+  choose: number;
 }
 
 interface tier {
@@ -33,6 +57,7 @@ const T0: tier = {
     Support: [],
     Weapon: [],
     Tank: [],
+    Blacklist: [],
   },
   Monsters: [],
 };
@@ -44,6 +69,7 @@ const T1: tier = {
     Support: [],
     Weapon: [],
     Tank: [],
+    Blacklist: [],
   },
   Monsters: [],
 };
@@ -55,6 +81,7 @@ const T2: tier = {
     Support: [],
     Weapon: [],
     Tank: [],
+    Blacklist: [],
   },
   Monsters: [],
 };
@@ -66,6 +93,7 @@ const T3: tier = {
     Support: [],
     Weapon: [],
     Tank: [],
+    Blacklist: [],
   },
   Monsters: [],
 };
@@ -77,6 +105,7 @@ const T4: tier = {
     Support: [],
     Weapon: [],
     Tank: [],
+    Blacklist: [],
   },
   Monsters: [],
 };
@@ -87,16 +116,32 @@ for (const i of items) {
   for (const type of i.type) {
     switch (type) {
       case "Accessory":
-        tiers[i.tier].Items.Accessory.push(i);
+        // add all accessories to every tier above as well
+        for (let t = i.tier; t < 5; t++) {
+          tiers[t].Items.Accessory.push(i);
+        }
         break;
       case "Armour":
-        tiers[i.tier].Items.Armour.push(i);
+        // add almost all armour to every tier above as well
+        if (i.tier > 0) {
+          for (let t = i.tier; t < 5; t++) {
+            tiers[t].Items.Armour.push(i);
+          }
+        } else {
+          tiers[i.tier].Items.Armour.push(i);
+        }
         break;
       case "Support":
-        tiers[i.tier].Items.Support.push(i);
+        // add all support to every tier above as well
+        for (let t = i.tier; t < 5; t++) {
+          tiers[t].Items.Support.push(i);
+        }
         break;
       case "Weapon":
+        // weapons can be used 1 tier above
+
         tiers[i.tier].Items.Weapon.push(i);
+        if (i.tier !== 4) tiers[i.tier + 1].Items.Weapon.push(i);
         break;
       case "Tank":
         tiers[i.tier].Items.Tank.push(i);
@@ -119,32 +164,48 @@ function generateTier(selectedTier: number): string {
   const loadouts: string[] = [];
 
   // generate 4 armour sets and 4 weapons
-  loadouts.push(generateItem(selectedTier, "Armour"));
-  loadouts.push(generateItem(selectedTier, "Armour"));
-  loadouts.push(generateItem(selectedTier, "Armour"));
-  loadouts.push(generateItem(selectedTier, "Armour"));
-  loadouts.push(generateItem(selectedTier, "Weapon"));
-  loadouts.push(generateItem(selectedTier, "Weapon"));
-  loadouts.push(generateItem(selectedTier, "Weapon"));
-  loadouts.push(generateItem(selectedTier, "Weapon"));
+  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
+  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
+  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
+  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
+  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
+  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
+  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
+  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
 
   switch (selectedTier) {
     case 0:
-      loadouts.push(generateItem(selectedTier, "Accessory"));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
       break;
     case 1:
-      loadouts.push(generateItem(selectedTier, "Accessory"));
-      loadouts.push(generateItem(selectedTier, "Accessory"));
-      loadouts.push(generateItem(selectedTier, "Accessory"));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      break;
+    case 2:
+      loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Support")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Tank")));
       break;
     default:
-      loadouts.push(generateItem(selectedTier, "Accessory"));
-      loadouts.push(generateItem(selectedTier, "Accessory"));
-      loadouts.push(generateItem(selectedTier, "Accessory"));
-      loadouts.push(generateItem(selectedTier, "Accessory"));
-      loadouts.push(generateItem(selectedTier, "Accessory"));
-      loadouts.push(generateItem(selectedTier, "Support"));
-      loadouts.push(generateItem(selectedTier, "Tank"));
+      loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Support")));
+      loadouts.push(formatItem(generateItem(selectedTier, "Tank")));
       break;
   }
   let val = `${generateMonster(selectedTier)}\n`;
@@ -152,9 +213,15 @@ function generateTier(selectedTier: number): string {
     val += `${i}, `;
   }
 
-  val += `\n${generateSurvivor(selectedTier)}\n${generateSurvivor(
-    selectedTier
-  )}\n${generateSurvivor(selectedTier)}\n${generateSurvivor(selectedTier)}`;
+  val += `\n${formatSurvivor(generateSurvivor(selectedTier))}\n${formatSurvivor(
+    generateSurvivor(selectedTier)
+  )}\n${formatSurvivor(generateSurvivor(selectedTier))}\n${formatSurvivor(
+    generateSurvivor(selectedTier)
+  )}`;
+
+  val += `\n${formatSettlementDetails(
+    generateSettlementDetails(selectedTier)
+  )}`;
   return val;
 }
 
@@ -162,7 +229,10 @@ function roll(): number {
   return Math.floor(Math.random() * 10) + 1;
 }
 
-function generateItem(selectedTier: number, type: keyof ItemsType): string {
+function generateItem(
+  selectedTier: number,
+  type: keyof ItemsType
+): Item | null {
   //10% chance to roll up or down a tier
   let itemTier = selectedTier;
 
@@ -179,13 +249,18 @@ function generateItem(selectedTier: number, type: keyof ItemsType): string {
   if (itemTier < 0) itemTier = 0;
 
   if (tiers[itemTier].Items[type].length === 0) {
-    return "";
+    return null;
   }
 
   // find the random index
   const entry = Math.floor(Math.random() * tiers[itemTier].Items[type].length);
 
-  return tiers[itemTier].Items[type][entry].name;
+  return tiers[itemTier].Items[type][entry];
+}
+
+function formatItem(i: Item | null): string {
+  if (i === null) return "";
+  return `${i.name}(${i.location})`;
 }
 
 function generateMonster(selectedTier: number): string {
@@ -196,8 +271,8 @@ function generateMonster(selectedTier: number): string {
 }
 
 // generate a player with ages completed
-function generateSurvivor(selectedTier: number): string {
-  const stats = {
+function generateSurvivor(selectedTier: number): CharacterInfo {
+  const stats: CharacterInfo = {
     strength: 0,
     evasion: 0,
     accuracy: 0,
@@ -272,12 +347,68 @@ function generateSurvivor(selectedTier: number): string {
     }
   }
 
+  return stats;
+}
+
+function formatSurvivor(c: CharacterInfo): string {
   let character = "Survivor with: ";
-  for (const key of Object.keys(stats)) {
-    if (stats[key as keyof typeof stats] > 0) {
-      character += `+${stats[key as keyof typeof stats]} ${key},`;
+  for (const key of Object.keys(c)) {
+    if (c[key as keyof typeof c] > 0) {
+      character += `+${c[key as keyof typeof c]} ${key},`;
     }
   }
 
   return character;
+}
+
+function generateSettlementDetails(selectedTier: number): SettlementInfo {
+  const settlement: SettlementInfo = {
+    maxSurvival: 0,
+    startingSurvival: 0,
+    weaponProficiencies: 0,
+    weaponMasteries: 0,
+    encourage: true,
+    dodge: true,
+    surge: false,
+    dash: false,
+  };
+
+  settlement.maxSurvival = selectedTier * 2 + 1;
+  settlement.startingSurvival = selectedTier;
+
+  switch (selectedTier) {
+    case 1:
+      settlement.weaponProficiencies = 1;
+      if (Math.random() > 0.5) settlement.dash = true;
+      if (Math.random() > 0.5) settlement.surge = true;
+      break;
+    case 2:
+      settlement.weaponProficiencies = Math.floor(Math.random() * 3) + 1;
+      if (Math.random() > 0.2) settlement.dash = true;
+      if (Math.random() > 0.2) settlement.surge = true;
+
+      break;
+    case 3:
+      settlement.weaponProficiencies = 2;
+      settlement.weaponMasteries = Math.floor(Math.random() * 2);
+      settlement.dash = true;
+      settlement.surge = true;
+      break;
+  }
+
+  return settlement;
+}
+
+function formatSettlementDetails(c: SettlementInfo): string {
+  let settlement = "Settlement with: \n";
+  settlement += `Max Survival: ${c.maxSurvival}\n`;
+  settlement += `Starting Survival: ${c.startingSurvival}\n`;
+  settlement += `Weapon Proficiencies: ${c.weaponProficiencies}\n`;
+  settlement += `Weapon Masteries: ${c.weaponMasteries}\n`;
+  if (c.encourage) settlement += `Can encourage\n`;
+  if (c.dodge) settlement += `Can dodge\n`;
+  if (c.surge) settlement += `Can surge\n`;
+  if (c.dash) settlement += `Can dash\n`;
+
+  return settlement;
 }
