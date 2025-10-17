@@ -3,7 +3,8 @@
   color: whitesmoke;
 }
 
-#details {
+#details,
+#endeavors {
   display: flex;
   flex-wrap: wrap;
 }
@@ -12,21 +13,24 @@ H1 {
   flex: 2;
 }
 
-form {
-  flex: 2;
+p,
+h3,
+ul {
+  margin: 0;
+  padding-inline-start: 0;
 }
 
-fieldset,
 button {
   border-radius: 1em;
-  max-width: 50%;
-  min-width: 20%;
+  margin: 1em;
+  width: fit-content;
 }
 
 .character {
   width: fit-content;
 }
 
+form,
 .info {
   border: solid;
   border-radius: 1em;
@@ -35,6 +39,14 @@ button {
   margin: 1em;
 }
 
+fieldset {
+  border: none;
+}
+
 .gear {
   border-bottom: solid;
+}
+
+#settlement {
+  max-width: 50%;
 }

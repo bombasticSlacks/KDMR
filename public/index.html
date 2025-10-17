@@ -11,6 +11,8 @@
 <body>
     <div id="title">
         <h1>Your Challenge:</h1>
+    </div>
+    <div id="details">
         <form>
             <fieldset>
                 <legend> Select your tier </legend>
@@ -36,8 +38,11 @@
                 </div>
             </fieldset>
         </form>
-    </div>
-    <div id="details">
+
+        <div id="gear" class="info">
+            <h2>Gear</h2>
+            <p id="gearDetails"></p>
+        </div>
         <div id="monster" class="info">
             <h2>Monster</h2>
             <p id="monsterDetails"></p>
@@ -46,13 +51,63 @@
             <h2>Survivors</h2>
             <p id="survivorDetails"></p>
         </div>
-        <div id="gear" class="info">
-            <h2>Gear</h2>
-            <p id="gearDetails"></p>
-        </div>
+
         <div id="settlement" class="info">
             <h2>Settlement</h2>
             <p id="settlementDetails"></p>
+        </div>
+    </div>
+    <h1>You Each May Endeavor Before Departing: ✪✪✪✪</h1>
+    <div id="endeavors">
+        <div class="info">
+            <h3>You Pray ✪</h3>
+            <p>Roll 1d10</p>
+            <ul>
+                <li>1: You gain 1 disorder</li>
+                <li>2-4: You gain +★ insanity</li>
+                <li>5-8: You gain +★ to all hit locations</li>
+                <li>9: You gain +1 luck</li>
+                <li>10: Gain ✪, if you roll while spending ✪, roll 2d10 and select which result to count</li>
+            </ul>
+        </div>
+        <div class="info">
+            <h3>You Dance ✪</h3>
+            <p>Roll 1d10</p>
+            <ul>
+                <li>1: You gain -1 movement</li>
+                <li>2-4: You gain +1 evasion</li>
+                <li>5-7: You gain +1 movement</li>
+                <li>8-10: You and another survivor gain Synchronized Strike secret fighting art</li>
+            </ul>
+        </div>
+        <div class="info">
+            <h3>You Prepare Your Gear ✪</h3>
+            <p>Roll 1d10</p>
+            <ul>
+                <li>1: You gain -1 survival</li>
+                <li>2-4: You gain +★ survival</li>
+                <li>5-7: You gain +1 strength</li>
+                <li>8-10: All survivors gain +1 survival</li>
+            </ul>
+        </div>
+        <div class="info">
+            <h3>You Train ✪</h3>
+            <p>Roll 1d10</p>
+            <ul>
+                <li>1: You gain -1 strength</li>
+                <li>2-4: Draw 2 fighting arts, you gain 1</li>
+                <li>5-7: You gain +1 accuracy</li>
+                <li>8-10: You may copy any fighting art or secret fighting art another survivor has</li>
+            </ul>
+        </div>
+        <div class="info">
+            <h3>You Craft ✪</h3>
+            <p>Choose One:</p>
+            <ul>
+                <li>Obtain a copy of a paired weapon</li>
+                <li>Sacrifice a weapon to obtain another weapon of tier of a certain type</li>
+                <li>Sacrifice an armor set, obtain another random armour set of tier</li>
+            </ul>
         </div>
     </div>
     <footer>
