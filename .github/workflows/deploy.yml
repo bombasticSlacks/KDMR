@@ -39,16 +39,13 @@ jobs:
         run: npm install tsc
       - name: compile typescript
         run: tsc
-      - name: check files
-        run: echo public/insert.js
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: 'public'
+          path: "public"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        

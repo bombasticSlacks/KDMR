@@ -22,3 +22,4 @@ Randomizes battles to do in KDM
 - Get a Paired Weapon
 - Fletch an arrow maybe, or force a weapon type?
 - Force an armour you qualify for.
+- train to get another person FA, or discard a FA / SFA / Disorder and draw a new one

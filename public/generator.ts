@@ -7,6 +7,14 @@ interface Item {
   type: string[];
   tier: number;
   location: string;
+  rare: boolean;
+}
+
+interface Challenge {
+  monster: string;
+  items: Item[];
+  survivors: CharacterInfo[];
+  settlement: SettlementInfo | null;
 }
 
 interface monster {
@@ -42,6 +50,7 @@ interface CharacterInfo {
   movement: number;
   speed: number;
   fa: number;
+  sfa: number;
   choose: number;
 }
 
@@ -113,38 +122,51 @@ const tiers: tier[] = [T0, T1, T2, T3, T4];
 
 // Create the storage for all tiers and types
 for (const i of items) {
+  if ((i as Item).rare === undefined) {
+    i.rare = false;
+  }
   for (const type of i.type) {
     switch (type) {
       case "Accessory":
         // add all accessories to every tier above as well
         for (let t = i.tier; t < 5; t++) {
-          tiers[t].Items.Accessory.push(i);
+          tiers[t].Items.Accessory.push(i as Item);
+          // make rare gear half as likely
+          if (!i.rare) tiers[t].Items.Accessory.push(i as Item);
         }
         break;
       case "Armour":
         // add almost all armour to every tier above as well
         if (i.tier > 0) {
           for (let t = i.tier; t < 5; t++) {
-            tiers[t].Items.Armour.push(i);
+            tiers[t].Items.Armour.push(i as Item);
+            // make rare gear half as likely
+            if (!i.rare) tiers[t].Items.Armour.push(i as Item);
           }
         } else {
-          tiers[i.tier].Items.Armour.push(i);
+          tiers[i.tier].Items.Armour.push(i as Item);
         }
         break;
       case "Support":
         // add all support to every tier above as well
         for (let t = i.tier; t < 5; t++) {
-          tiers[t].Items.Support.push(i);
+          tiers[t].Items.Support.push(i as Item);
+          if (!i.rare) tiers[t].Items.Support.push(i as Item);
         }
         break;
       case "Weapon":
         // weapons can be used 1 tier above
+        tiers[i.tier].Items.Weapon.push(i as Item);
+        if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
 
-        tiers[i.tier].Items.Weapon.push(i);
-        if (i.tier !== 4) tiers[i.tier + 1].Items.Weapon.push(i);
+        if (i.tier !== 4) {
+          tiers[i.tier + 1].Items.Weapon.push(i as Item);
+          if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
+        }
         break;
       case "Tank":
-        tiers[i.tier].Items.Tank.push(i);
+        tiers[i.tier].Items.Tank.push(i as Item);
+        if (!i.rare) tiers[i.tier].Items.Tank.push(i as Item);
         break;
     }
   }
@@ -158,81 +180,75 @@ for (const i of monsters) {
   }
 }
 
-console.log(generateTier(2));
-
-function generateTier(selectedTier: number): string {
-  const loadouts: string[] = [];
-
+export function generateTier(selectedTier: number): Challenge {
+  const challenge: Challenge = {
+    items: [],
+    monster: "",
+    settlement: null,
+    survivors: [],
+  };
   // generate 4 armour sets and 4 weapons
-  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
-  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
-  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
-  loadouts.push(formatItem(generateItem(selectedTier, "Armour")));
-  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
-  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
-  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
-  loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
+  challenge.items.push(generateItem(selectedTier, "Armour"));
+  challenge.items.push(generateItem(selectedTier, "Armour"));
+  challenge.items.push(generateItem(selectedTier, "Armour"));
+  challenge.items.push(generateItem(selectedTier, "Armour"));
+  challenge.items.push(generateItem(selectedTier, "Weapon"));
+  challenge.items.push(generateItem(selectedTier, "Weapon"));
+  challenge.items.push(generateItem(selectedTier, "Weapon"));
+  challenge.items.push(generateItem(selectedTier, "Weapon"));
 
   switch (selectedTier) {
     case 0:
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
       break;
     case 1:
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
       break;
     case 2:
-      loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Support")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Tank")));
+      challenge.items.push(generateItem(selectedTier, "Weapon"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Support"));
+      challenge.items.push(generateItem(selectedTier, "Tank"));
       break;
     default:
-      loadouts.push(formatItem(generateItem(selectedTier, "Weapon")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Accessory")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Support")));
-      loadouts.push(formatItem(generateItem(selectedTier, "Tank")));
+      challenge.items.push(generateItem(selectedTier, "Weapon"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      challenge.items.push(generateItem(selectedTier, "Support"));
+      challenge.items.push(generateItem(selectedTier, "Tank"));
       break;
   }
-  let val = `${generateMonster(selectedTier)}\n`;
-  for (const i of loadouts) {
-    val += `${i}, `;
-  }
+  challenge.monster = generateMonster(selectedTier);
 
-  val += `\n${formatSurvivor(generateSurvivor(selectedTier))}\n${formatSurvivor(
-    generateSurvivor(selectedTier)
-  )}\n${formatSurvivor(generateSurvivor(selectedTier))}\n${formatSurvivor(
-    generateSurvivor(selectedTier)
-  )}`;
+  challenge.survivors.push(generateSurvivor(selectedTier));
+  challenge.survivors.push(generateSurvivor(selectedTier));
+  challenge.survivors.push(generateSurvivor(selectedTier));
+  challenge.survivors.push(generateSurvivor(selectedTier));
 
-  val += `\n${formatSettlementDetails(
-    generateSettlementDetails(selectedTier)
-  )}`;
-  return val;
+  challenge.settlement = generateSettlementDetails(selectedTier);
+
+  return challenge;
 }
 
 function roll(): number {
   return Math.floor(Math.random() * 10) + 1;
 }
 
-function generateItem(
-  selectedTier: number,
-  type: keyof ItemsType
-): Item | null {
+function generateItem(selectedTier: number, type: keyof ItemsType): Item {
   //10% chance to roll up or down a tier
   let itemTier = selectedTier;
 
@@ -249,7 +265,13 @@ function generateItem(
   if (itemTier < 0) itemTier = 0;
 
   if (tiers[itemTier].Items[type].length === 0) {
-    return null;
+    return {
+      name: "Founding Stone",
+      type: ["Accessory"],
+      tier: 0,
+      location: "Starter",
+      rare: false,
+    };
   }
 
   // find the random index
@@ -258,7 +280,7 @@ function generateItem(
   return tiers[itemTier].Items[type][entry];
 }
 
-function formatItem(i: Item | null): string {
+export function formatItem(i: Item | null): string {
   if (i === null) return "";
   return `${i.name}(${i.location})`;
 }
@@ -281,6 +303,7 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
     speed: 0,
     fa: 0,
     choose: 0,
+    sfa: 0,
   };
 
   // Age 1
@@ -297,6 +320,9 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
     } else if (val === 20) {
       stats.luck += 1;
     }
+
+    // chance for a SFA
+    if (roll() > 9) stats.sfa = 1;
   }
 
   // Age 2
@@ -313,6 +339,9 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
     } else if (val === 20) {
       stats.speed += 1;
     }
+
+    // chance for a SFA
+    if (roll() > 9) stats.sfa = 1;
   }
 
   // Age 3
@@ -329,6 +358,9 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
     } else if (val === 20) {
       stats.strength += 3;
     }
+
+    // chance for a SFA
+    if (roll() > 9) stats.sfa = 1;
   }
 
   // Age 4
@@ -345,12 +377,15 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
     } else if (val === 20) {
       stats.choose += 1;
     }
+
+    // chance for a SFA
+    if (roll() > 9) stats.sfa = 1;
   }
 
   return stats;
 }
 
-function formatSurvivor(c: CharacterInfo): string {
+export function formatSurvivor(c: CharacterInfo): string {
   let character = "Survivor with: ";
   for (const key of Object.keys(c)) {
     if (c[key as keyof typeof c] > 0) {
@@ -399,7 +434,7 @@ function generateSettlementDetails(selectedTier: number): SettlementInfo {
   return settlement;
 }
 
-function formatSettlementDetails(c: SettlementInfo): string {
+export function formatSettlementDetails(c: SettlementInfo): string {
   let settlement = "Settlement with: \n";
   settlement += `Max Survival: ${c.maxSurvival}\n`;
   settlement += `Starting Survival: ${c.startingSurvival}\n`;

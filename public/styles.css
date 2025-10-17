@@ -1,0 +1,40 @@
+* {
+  background-color: #1d1d1d;
+  color: whitesmoke;
+}
+
+#details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+H1 {
+  flex: 2;
+}
+
+form {
+  flex: 2;
+}
+
+fieldset,
+button {
+  border-radius: 1em;
+  max-width: 50%;
+  min-width: 20%;
+}
+
+.character {
+  width: fit-content;
+}
+
+.info {
+  border: solid;
+  border-radius: 1em;
+  width: fit-content;
+  padding: 2em;
+  margin: 1em;
+}
+
+.gear {
+  border-bottom: solid;
+}
