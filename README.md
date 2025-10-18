@@ -13,6 +13,6 @@ Randomizes battles to do in KDM
 ## Todo
 
 - Figure out a set for Flower Knight Helm to accessory with.
-- Format and style site
 - Add more variance for survivors
-- train to get another person FA, or discard a FA / SFA / Disorder and draw a new one
+- Add more variance composition (1-2 lower level characters)
+- Add 5/6 player rules from Fen, using the scouts of death.
