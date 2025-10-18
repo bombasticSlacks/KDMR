@@ -20,7 +20,7 @@ interface Challenge {
 interface Monster {
   name: string;
   tier: number[];
-  nemesis: boolean
+  nemesis: boolean;
 }
 
 interface MonsterInfo {
@@ -151,7 +151,10 @@ for (const i of items) {
             if (!i.rare) tiers[t].Items.Armour.push(i as Item);
           }
         } else {
+          // tier 0 is added to tier 1 as well not everyone has full armour sets early
           tiers[i.tier].Items.Armour.push(i as Item);
+          tiers[i.tier + 1].Items.Armour.push(i as Item);
+          tiers[i.tier + 1].Items.Armour.push(i as Item);
         }
         break;
       case "Support":
@@ -183,7 +186,11 @@ for (const i of items) {
 for (const i of monsters) {
   for (const t of i.tier) {
     // add monsters to each tier with their level in brackets
-    tiers[t].Monsters.push({ name: i.name, tier: i.tier.indexOf(t) + 1, nemesis: i.nemesis })
+    tiers[t].Monsters.push({
+      name: i.name,
+      tier: i.tier.indexOf(t) + 1,
+      nemesis: i.nemesis,
+    });
   }
 }
 

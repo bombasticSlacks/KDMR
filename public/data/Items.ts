@@ -772,6 +772,7 @@ export const items = [
     type: ["Armour"],
     tier: 1,
     location: "Squire Gear Grid(Black Knight)",
+    rare: true,
   },
   {
     name: "Black & Red Armor and Deprivation Skinsuit",
