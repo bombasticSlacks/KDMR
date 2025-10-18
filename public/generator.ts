@@ -11,15 +11,22 @@ interface Item {
 }
 
 interface Challenge {
-  monster: string;
+  monster: MonsterInfo | null;
   items: Item[];
   survivors: CharacterInfo[];
   settlement: SettlementInfo | null;
 }
 
-interface monster {
+interface Monster {
   name: string;
   tier: number[];
+  nemesis: boolean
+}
+
+interface MonsterInfo {
+  name: string;
+  tier: number;
+  nemesis: boolean;
 }
 
 interface ItemsType {
@@ -56,7 +63,7 @@ interface CharacterInfo {
 
 interface tier {
   Items: ItemsType;
-  Monsters: string[];
+  Monsters: MonsterInfo[];
 }
 
 const T0: tier = {
@@ -176,14 +183,14 @@ for (const i of items) {
 for (const i of monsters) {
   for (const t of i.tier) {
     // add monsters to each tier with their level in brackets
-    tiers[t].Monsters.push(`${i.name}(${i.tier.indexOf(t) + 1})`);
+    tiers[t].Monsters.push({ name: i.name, tier: i.tier.indexOf(t) + 1, nemesis: i.nemesis })
   }
 }
 
 export function generateTier(selectedTier: number): Challenge {
   const challenge: Challenge = {
     items: [],
-    monster: "",
+    monster: null,
     settlement: null,
     survivors: [],
   };
@@ -285,7 +292,7 @@ export function formatItem(i: Item | null): string {
   return `${i.name}(${i.location})`;
 }
 
-function generateMonster(selectedTier: number): string {
+function generateMonster(selectedTier: number): MonsterInfo {
   // find the random index
   const entry = Math.floor(Math.random() * tiers[selectedTier].Monsters.length);
 
