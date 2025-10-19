@@ -19,11 +19,13 @@
   "item details": {
     "prefix": ["it"],
     "body": [
-      "{ name: \"$1\", type: [\"${2|Accessory,Weapon,Armour,Support,Tank,Blacklist|}\"], tier: $3 },"
+      "{ name: \"$1\", type: [\"${2|Accessory,Weapon,Armour,Support,Tank,Blacklist|}\"], tier: $3, rare: ${4|true, false|}, expansion: \"$5\" },"
     ]
   },
   "monster details": {
     "prefix": ["mo"],
-    "body": ["{ name: \"$1\", tier: [$2, $3, $4], nemesis: ${5|false,true|} },"]
+    "body": [
+      "{ name: \"$1\", tier: [$2, $3, $4], nemesis: ${5|false,true|}, expansion: \"$6\" },"
+    ]
   }
 }

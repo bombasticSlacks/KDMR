@@ -66,3 +66,7 @@ fieldset {
 #settlement {
   max-width: 50%;
 }
+
+.flavour {
+  font-style: italic;
+}

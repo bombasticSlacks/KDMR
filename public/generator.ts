@@ -8,6 +8,7 @@ interface Item {
   tier: number;
   location: string;
   rare: boolean;
+  expansion: string;
 }
 
 interface Challenge {
@@ -50,15 +51,19 @@ interface SettlementInfo {
 }
 
 interface CharacterInfo {
-  strength: number;
-  evasion: number;
-  accuracy: number;
-  luck: number;
-  movement: number;
-  speed: number;
-  fa: number;
-  sfa: number;
-  choose: number;
+  stats: {
+    strength: number;
+    evasion: number;
+    accuracy: number;
+    luck: number;
+    movement: number;
+    speed: number;
+    fa: number;
+    sfa: number;
+    choose: number;
+  };
+  abilities: [];
+  title: string;
 }
 
 interface tier {
@@ -285,6 +290,7 @@ function generateItem(selectedTier: number, type: keyof ItemsType): Item {
       tier: 0,
       location: "Starter",
       rare: false,
+      expansion: "Core Box",
     };
   }
 
@@ -308,104 +314,113 @@ function generateMonster(selectedTier: number): MonsterInfo {
 
 // generate a player with ages completed
 function generateSurvivor(selectedTier: number): CharacterInfo {
-  const stats: CharacterInfo = {
-    strength: 0,
-    evasion: 0,
-    accuracy: 0,
-    luck: 0,
-    movement: 0,
-    speed: 0,
-    fa: 0,
-    choose: 0,
-    sfa: 0,
+  const character: CharacterInfo = {
+    stats: {
+      strength: 0,
+      evasion: 0,
+      accuracy: 0,
+      luck: 0,
+      movement: 0,
+      speed: 0,
+      fa: 0,
+      choose: 0,
+      sfa: 0,
+    },
+    abilities: [],
+    title: "Survivor",
   };
 
   // Age 1
   if (selectedTier >= 1) {
     const val = roll() + roll();
     if (val === 2) {
-      stats.evasion += 1;
+      character.stats.evasion += 1;
     } else if (val <= 6) {
-      stats.strength += 1;
+      character.stats.strength += 1;
     } else if (val <= 15) {
-      stats.fa += 1;
+      character.stats.fa += 1;
     } else if (val <= 19) {
-      stats.accuracy += 1;
+      character.stats.accuracy += 1;
     } else if (val === 20) {
-      stats.luck += 1;
+      character.stats.luck += 1;
     }
 
     // chance for a SFA
-    if (roll() > 9) stats.sfa = 1;
+    if (roll() > 9) character.stats.sfa = 1;
   }
 
   // Age 2
   if (selectedTier >= 2) {
     const val = roll() + roll();
     if (val === 2) {
-      stats.movement += 1;
+      character.stats.movement += 1;
     } else if (val <= 6) {
-      stats.fa += 1;
+      character.stats.fa += 1;
     } else if (val <= 15) {
-      stats.strength += 1;
+      character.stats.strength += 1;
     } else if (val <= 19) {
-      stats.fa += 1;
+      character.stats.fa += 1;
     } else if (val === 20) {
-      stats.speed += 1;
+      character.stats.speed += 1;
     }
 
     // chance for a SFA
-    if (roll() > 9) stats.sfa = 1;
+    if (roll() > 9) character.stats.sfa = 1;
   }
 
   // Age 3
   if (selectedTier >= 3) {
     const val = roll() + roll();
     if (val === 2) {
-      stats.speed += 1;
+      character.stats.speed += 1;
     } else if (val <= 6) {
-      stats.movement += 1;
+      character.stats.movement += 1;
     } else if (val <= 15) {
-      stats.fa += 1;
+      character.stats.fa += 1;
     } else if (val <= 19) {
-      stats.fa += 2;
+      character.stats.fa += 2;
     } else if (val === 20) {
-      stats.strength += 3;
+      character.stats.strength += 3;
     }
 
     // chance for a SFA
-    if (roll() > 9) stats.sfa = 1;
+    if (roll() > 9) character.stats.sfa = 1;
   }
 
   // Age 4
   if (selectedTier >= 4) {
     const val = roll() + roll();
     if (val === 2) {
-      stats.fa += 5;
+      character.stats.fa += 5;
     } else if (val <= 6) {
-      stats.evasion += 1;
+      character.stats.evasion += 1;
     } else if (val <= 15) {
-      stats.luck += 1;
+      character.stats.luck += 1;
     } else if (val <= 19) {
-      stats.speed += 1;
+      character.stats.speed += 1;
     } else if (val === 20) {
-      stats.choose += 1;
+      character.stats.choose += 1;
     }
 
     // chance for a SFA
-    if (roll() > 9) stats.sfa = 1;
+    if (roll() > 9) character.stats.sfa = 1;
   }
 
-  return stats;
+  return character;
 }
 
 export function formatSurvivor(c: CharacterInfo): string {
-  let character = "Survivor with: ";
-  for (const key of Object.keys(c)) {
-    if (c[key as keyof typeof c] > 0) {
-      character += `+${c[key as keyof typeof c]} ${key},`;
+  let character = ``;
+  let stats = "";
+  for (const key of Object.keys(c.stats)) {
+    if (c.stats[key as keyof typeof c.stats] > 0) {
+      stats += `+${c.stats[key as keyof typeof c.stats]} ${key},`;
     }
   }
+
+  character += characterHelper(stats);
+
+  //character += `\n Abilities: `;
 
   return character;
 }
@@ -467,6 +482,10 @@ export function formatSettlementDetails(c: SettlementInfo): string {
   settlement += `</div>`;
 
   return settlement;
+}
+
+function characterHelper(val: string): string {
+  return `<div class=settlementAttribute><h3 class=settlementTitle>Survivor</h3><p class=settlementValue>${val}</p></div>`;
 }
 
 function settlementHelper(title: string, val: number): string {

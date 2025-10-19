@@ -15,4 +15,9 @@ Randomizes battles to do in KDM
 - Figure out a set for Flower Knight Helm to accessory with.
 - Add more variance for survivors
 - Add more variance composition (1-2 lower level characters)
-- Add 5/6 player rules from Fen, using the scouts of death.
+- Add 5/6 player rules from Fen, using the scouts of death. Have card, add
+- Chance for "Saviors", chance for celestials, chance for wanderers.
+- Specify characters hunt xp, courage, and wisdom, start with some insanity.
+- Options for available expansions.
+- Reroll buttons.
+- More details for stuff like twilight sword.
