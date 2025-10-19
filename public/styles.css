@@ -37,6 +37,12 @@ button {
   background-color: #1d1d1d;
 }
 
+#armourSelect,
+#weaponSelect {
+  margin: 0;
+  margin-right: 0.5em;
+}
+
 .character {
   width: fit-content;
 }
@@ -108,5 +114,9 @@ select {
 }
 
 .question {
+  padding: 0.5em;
+}
+
+.inline {
   padding: 0.5em;
 }

@@ -27,5 +27,11 @@
     "body": [
       "{ name: \"$1\", tier: [$2, $3, $4], nemesis: ${5|false,true|}, expansion: \"$6\" },"
     ]
+  },
+  "weapon_details": {
+    "prefix": ["wt"],
+    "body": [
+      "weaponType: [\"${1|Whip,Dagger,Sword,Katana,Axe,Bow,Club,Grand,Katar,Shield,Scythe,Thrown,Spear|}\"],"
+    ]
   }
 }

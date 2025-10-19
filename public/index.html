@@ -28,7 +28,7 @@
     </div>
     <div id="title">
         <h1>Nomads:</h1>
-        <p> 4 survivors sit around a fire in the plain of faces, they either hunt or are hunted. </p>
+        <p> Survivors sit around a fire in the plain of faces, they either hunt or are hunted. </p>
     </div>
     <div id="details">
         <form id="generator">
@@ -73,7 +73,7 @@
         </div>
         <div id="monster" class="info">
             <h2 id="huntOr">They Hunt</h2>
-            <h3 id="monsterDetails"></h3>
+            <div id="monsterDetails"></div>
         </div>
         <div id="characters" class="info">
             <h2>They Are</h2>
@@ -139,8 +139,16 @@
             <p>Choose One:</p>
             <ul>
                 <li>Obtain a copy of a paired weapon already in camp</li>
-                <li>Sacrifice a weapon to obtain another weapon of tier of a certain type</li>
-                <li>Sacrifice an armor set, obtain another random armour set of tier</li>
+                <li>Sacrifice a weapon to obtain another non-rare weapon</li>
+                <div class="flex inline">
+                    <select id="weaponSelect"></select>
+                    <p id="weaponResult"></p>
+                </div>
+                <li>Sacrifice an armour set, obtain another random armour set</li>
+                <div class="flex inline">
+                    <button id="armourSelect">New Armour</button>
+                    <p id="armourResult"></p>
+                </div>
             </ul>
         </div>
         <div class="info">

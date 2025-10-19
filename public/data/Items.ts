@@ -5,6 +5,7 @@ interface Item {
   location: string;
   rare?: boolean | null;
   expansion: string;
+  weaponType?: string[];
 }
 
 export const items: Item[] = [
@@ -42,6 +43,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Skinnery",
     expansion: "Core Box",
+    weaponType: ["Whip"],
   },
   {
     name: "Rawhide Drum",
@@ -112,6 +114,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Gorm",
     expansion: "Gorm",
+    weaponType: ["Grand"],
   },
   {
     name: "Knuckle Shield",
@@ -119,6 +122,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Gorm",
     expansion: "Gorm",
+    weaponType: ["Shield"],
   },
   {
     name: "Gaxe",
@@ -126,6 +130,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Gorm",
     expansion: "Gorm",
+    weaponType: ["Axe"],
   },
   {
     name: "Greater Gaxe",
@@ -133,6 +138,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Gorm",
     expansion: "Gorm",
+    weaponType: ["Axe"],
   },
   {
     name: "Gorn",
@@ -147,6 +153,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Gorm",
     expansion: "Gorm",
+    weaponType: ["Club"],
   },
   {
     name: "Pulse Lantern",
@@ -168,6 +175,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Gorm",
     expansion: "Gorm",
+    weaponType: ["Dagger"],
   },
   {
     name: "Black Sword",
@@ -175,6 +183,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Gorm",
     expansion: "Gorm",
+    weaponType: ["Sword"],
   },
   {
     name: "Healing Potion",
@@ -217,6 +226,7 @@ export const items: Item[] = [
     tier: 0,
     location: "Bone Smith",
     expansion: "Core Box",
+    weaponType: ["Dagger"],
   },
   {
     name: "Bone Blade",
@@ -224,6 +234,7 @@ export const items: Item[] = [
     tier: 0,
     location: "Bone Smith",
     expansion: "Core Box",
+    weaponType: ["Sword"],
   },
   {
     name: "Bone Axe",
@@ -231,6 +242,7 @@ export const items: Item[] = [
     tier: 0,
     location: "Bone Smith",
     expansion: "Core Box",
+    weaponType: ["Axe"],
   },
   {
     name: "Bone Darts",
@@ -238,6 +250,7 @@ export const items: Item[] = [
     tier: 0,
     location: "Bone Smith",
     expansion: "Core Box",
+    weaponType: ["Thrown"],
   },
   {
     name: "Bone Club",
@@ -245,6 +258,7 @@ export const items: Item[] = [
     tier: 0,
     location: "Bone Smith",
     expansion: "Core Box",
+    weaponType: ["Club"],
   },
   {
     name: "Skull Helm",
@@ -280,6 +294,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Blacksmith",
     expansion: "Core Box",
+    weaponType: ["Sword"],
   },
   {
     name: "Lantern Dagger",
@@ -287,6 +302,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Blacksmith",
     expansion: "Core Box",
+    weaponType: ["Dagger"],
   },
   {
     name: "Lantern Glaive",
@@ -294,6 +310,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Blacksmith",
     expansion: "Core Box",
+    weaponType: ["Spear", "Axe"],
   },
   {
     name: "Dragon Slayer",
@@ -301,6 +318,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Blacksmith",
     expansion: "Core Box",
+    weaponType: ["Grand"],
   },
   {
     name: "Beacon Shield",
@@ -308,6 +326,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Blacksmith",
     expansion: "Core Box",
+    weaponType: ["Shield"],
   },
   {
     name: "Ring Whip",
@@ -315,6 +334,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Blacksmith",
     expansion: "Core Box",
+    weaponType: ["Whip"],
   },
   {
     name: "Polishing Lantern",
@@ -329,6 +349,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Blacksmith",
     expansion: "Core Box",
+    weaponType: ["Grand", "Sword"],
   },
   {
     name: "Conterweight Axe",
@@ -336,6 +357,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Axe"],
   },
   {
     name: "Skullcap Hammer",
@@ -343,6 +365,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Club"],
   },
   {
     name: "Whistling Mace",
@@ -350,6 +373,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Club", "Whip"],
   },
   {
     name: "Scrap Sword",
@@ -357,6 +381,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Sword"],
   },
   {
     name: "Scrap Lantern",
@@ -371,6 +396,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Dagger"],
   },
   {
     name: "Scrap Rebar",
@@ -385,6 +411,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Spear"],
   },
   {
     name: "Zanbato",
@@ -392,6 +419,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Grand"],
   },
   {
     name: "Scrap Shield",
@@ -399,6 +427,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Weapon Crafter",
     expansion: "Core Box",
+    weaponType: ["Shield"],
   },
   {
     name: "First Aid Kit",
@@ -483,6 +512,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Stone Circle",
     expansion: "Core Box",
+    weaponType: ["Katar"],
   },
   {
     name: "Speed Powder",
@@ -518,6 +548,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Stone Circle",
     expansion: "Core Box",
+    weaponType: ["Spear"],
   },
   {
     name: "Dragon Armor",
@@ -532,6 +563,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Dragon Armoury",
     expansion: "Dragon King",
+    weaponType: ["Thrown"],
   },
   {
     name: "Blast Shield",
@@ -539,6 +571,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Dragon Armoury",
     expansion: "Dragon King",
+    weaponType: ["Shield"],
   },
   {
     name: "Dragon Bite Bolt",
@@ -560,6 +593,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Dragon Armoury",
     expansion: "Dragon King",
+    weaponType: ["Katar"],
   },
   {
     name: "Blast Sword",
@@ -567,6 +601,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Dragon Armoury",
     expansion: "Dragon King",
+    weaponType: ["Sword"],
   },
   {
     name: "Nuclear Knife",
@@ -574,6 +609,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Dragon Armoury",
     expansion: "Dragon King",
+    weaponType: ["Dagger"],
   },
   {
     name: "Nuclear Scythe",
@@ -581,6 +617,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Dragon Armoury",
     expansion: "Dragon King",
+    weaponType: ["Scythe"],
   },
   {
     name: "Red Core",
@@ -616,6 +653,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Dung Beetle Knight Gear",
     expansion: "Dung Beetle Knight",
+    weaponType: ["Katar"],
   },
   {
     name: "Seasoned Monster Meat",
@@ -665,6 +703,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Dung Beetle Knight Gear",
     expansion: "Dung Beetle Knight",
+    weaponType: ["Grand"],
   },
   {
     name: "Calcified Zanbato",
@@ -672,6 +711,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Dung Beetle Knight Gear",
     expansion: "Dung Beetle Knight",
+    weaponType: ["Grand"],
   },
   {
     name: "Calcified Digging Claw",
@@ -679,6 +719,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Dung Beetle Knight Gear",
     expansion: "Dung Beetle Knight",
+    weaponType: ["Katar"],
   },
   {
     name: "Calcified Greaves",
@@ -714,6 +755,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Leather Worker",
     expansion: "Core Box",
+    weaponType: ["Whip"],
   },
   {
     name: "Phoenix Armor",
@@ -728,6 +770,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Plumery",
     expansion: "Core Box",
+    weaponType: ["Shield"],
   },
   {
     name: "Feather Mantle",
@@ -756,6 +799,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Plumery",
     expansion: "Core Box",
+    weaponType: ["Axe"],
   },
   {
     name: "Hours Ring",
@@ -770,6 +814,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Plumery",
     expansion: "Core Box",
+    weaponType: ["Sword", "Dagger"],
   },
   {
     name: "Crest Crown",
@@ -784,6 +829,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Plumery",
     expansion: "Core Box",
+    weaponType: ["Bow"],
   },
   {
     name: "Hollowpoint Arrow",
@@ -798,6 +844,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Plumery",
     expansion: "Core Box",
+    weaponType: ["Spear"],
   },
   {
     name: "Blood Sheath",
@@ -812,6 +859,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Plumery",
     expansion: "Core Box",
+    weaponType: ["Katana"],
   },
   {
     name: "White Lion Mask",
@@ -868,6 +916,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Silk Mill",
     expansion: "Spidicules",
+    weaponType: ["Axe", "Spear"],
   },
   {
     name: "Body Suit",
@@ -882,6 +931,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Silk Mill",
     expansion: "Spidicules",
+    weaponType: ["Thrown"],
   },
   {
     name: "Silk Bomb",
@@ -896,6 +946,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Silk Mill",
     expansion: "Spidicules",
+    weaponType: ["Whip"],
   },
   {
     name: "Hooded Scrap Katar",
@@ -903,6 +954,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Silk Mill",
     expansion: "Spidicules",
+    weaponType: ["Katar"],
   },
   {
     name: "Amber Edge",
@@ -945,6 +997,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Catarium",
     expansion: "Core Box",
+    weaponType: ["Katar"],
   },
   {
     name: "Cat Eye Circlet",
@@ -973,6 +1026,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Catarium",
     expansion: "Core Box",
+    weaponType: ["Spear"],
   },
   {
     name: "Lion Headdress",
@@ -987,6 +1041,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Catarium",
     expansion: "Core Box",
+    weaponType: ["Bow"],
   },
   {
     name: "Lion Skin Cloak",
@@ -1001,6 +1056,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Catarium",
     expansion: "Core Box",
+    weaponType: ["Dagger"],
   },
   {
     name: "Frenzy Drink",
@@ -1022,6 +1078,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Skyreef Sanctuary",
     expansion: "Sunstalker",
+    weaponType: ["Thrown"],
   },
   {
     name: "Sunspot Lantern",
@@ -1036,6 +1093,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Skyreef Sanctuary",
     expansion: "Sunstalker",
+    weaponType: ["Bow"],
   },
   {
     name: "Quiver And Sunstring",
@@ -1064,6 +1122,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Skyreef Sanctuary",
     expansion: "Sunstalker",
+    weaponType: ["Axe"],
   },
   {
     name: "Sun Lure And Hook",
@@ -1078,6 +1137,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Skyreef Sanctuary",
     expansion: "Sunstalker",
+    weaponType: ["Grand"],
   },
   {
     name: "Sky Harpoon",
@@ -1085,6 +1145,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Skyreef Sanctuary",
     expansion: "Sunstalker",
+    weaponType: ["Spear", "Thrown"],
   },
   {
     name: "Ink Sword",
@@ -1092,6 +1153,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Skyreef Sanctuary",
     expansion: "Sunstalker",
+    weaponType: ["Sword"],
   },
   {
     name: "Ink Blood Bow",
@@ -1099,6 +1161,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Skyreef Sanctuary",
     expansion: "Sunstalker",
+    weaponType: ["Bow"],
   },
   {
     name: "Sun Vestments",
@@ -1115,6 +1178,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     expansion: "Sunstalker",
     rare: true,
+    weaponType: ["Bow"],
   },
   {
     name: "Apostle Crown",
@@ -1131,6 +1195,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     expansion: "Sunstalker",
     rare: true,
+    weaponType: ["Club"],
   },
   {
     name: "Vespertine Bow",
@@ -1138,6 +1203,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Flowerknight Gear",
     expansion: "Flowerknight",
+    weaponType: ["Bow"],
   },
   {
     name: "Vespertine Foil",
@@ -1145,6 +1211,7 @@ export const items: Item[] = [
     tier: 1,
     location: "Flowerknight Gear",
     expansion: "Flowerknight",
+    weaponType: ["Sword"],
   },
   {
     name: "Vespertine Arrow",
@@ -1187,6 +1254,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Slenderman Gear",
     expansion: "Slenderman",
+    weaponType: ["Club"],
   },
   {
     name: "Gloom Katana and Gloom Sheath",
@@ -1194,6 +1262,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Slenderman Gear",
     expansion: "Slenderman",
+    weaponType: ["Katana"],
   },
   {
     name: "Gloom-Coated Arrow",
@@ -1257,6 +1326,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Exhausted Lantern Hoard",
     expansion: "Core Box",
+    weaponType: ["Dagger"],
   },
   {
     name: "Oxidized Lantern Glaive",
@@ -1264,6 +1334,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Exhausted Lantern Hoard",
     expansion: "Core Box",
+    weaponType: ["Spear", "Axe"],
   },
   {
     name: "Oxidized Lantern Sword",
@@ -1271,6 +1342,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Exhausted Lantern Hoard",
     expansion: "Core Box",
+    weaponType: ["Sword"],
   },
   {
     name: "Oxidized Ring Whip",
@@ -1278,6 +1350,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Exhausted Lantern Hoard",
     expansion: "Core Box",
+    weaponType: ["Whip"],
   },
   {
     name: "Oxidized Lantern Helm (with Lantern Armor)",
@@ -1292,6 +1365,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Pattern(Pariah)",
     expansion: "Pariah",
+    weaponType: ["Club"],
   },
   {
     name: "Knife Scab",
@@ -1299,6 +1373,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Pattern(Pariah)",
     expansion: "Pariah",
+    weaponType: ["Dagger"],
   },
   {
     name: "Halberd Scab",
@@ -1306,6 +1381,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Pattern(Pariah)",
     expansion: "Pariah",
+    weaponType: ["Spear"],
   },
   {
     name: "Sword Scab",
@@ -1320,6 +1396,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Pattern(Pariah)",
     expansion: "Pariah",
+    weaponType: ["Bow"],
   },
   {
     name: "Marchioness Armor",
@@ -1377,6 +1454,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Sanguine Extrusion",
     expansion: "Red Witches",
+    weaponType: ["Bow"],
   },
   {
     name: "Hyperelastic Sword",
@@ -1384,6 +1462,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Sanguine Extrusion",
     expansion: "Red Witches",
+    weaponType: ["Sword"],
   },
   {
     name: "Hyperelastic Shield",

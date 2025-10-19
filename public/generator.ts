@@ -9,6 +9,7 @@ interface Item {
   location: string;
   rare: boolean;
   expansion: string;
+  weaponType?: string[];
 }
 
 interface Challenge {
@@ -29,6 +30,7 @@ interface MonsterInfo {
   name: string;
   tier: number;
   nemesis: boolean;
+  attributes: string[];
 }
 
 interface ItemsType {
@@ -75,6 +77,7 @@ interface CharacterInfo {
 interface tier {
   Items: ItemsType;
   Monsters: MonsterInfo[];
+  Weapons: Map<string, Item[]>;
 }
 
 const T0: tier = {
@@ -86,6 +89,7 @@ const T0: tier = {
     Tank: [],
     Blacklist: [],
   },
+  Weapons: new Map<string, Item[]>(),
   Monsters: [],
 };
 
@@ -98,6 +102,7 @@ const T1: tier = {
     Tank: [],
     Blacklist: [],
   },
+  Weapons: new Map<string, Item[]>(),
   Monsters: [],
 };
 
@@ -110,6 +115,7 @@ const T2: tier = {
     Tank: [],
     Blacklist: [],
   },
+  Weapons: new Map<string, Item[]>(),
   Monsters: [],
 };
 
@@ -122,6 +128,7 @@ const T3: tier = {
     Tank: [],
     Blacklist: [],
   },
+  Weapons: new Map<string, Item[]>(),
   Monsters: [],
 };
 
@@ -134,6 +141,7 @@ const T4: tier = {
     Tank: [],
     Blacklist: [],
   },
+  Weapons: new Map<string, Item[]>(),
   Monsters: [],
 };
 const tiers: tier[] = [T0, T1, T2, T3, T4];
@@ -157,6 +165,7 @@ export function load(expansionList: string[]) {
         Tank: [],
         Blacklist: [],
       },
+      Weapons: new Map<string, Item[]>(),
       Monsters: [],
     };
   }
@@ -221,6 +230,27 @@ export function load(expansionList: string[]) {
             tiers[i.tier + 1].Items.Weapon.push(i as Item);
             if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
           }
+
+          // add by tier to the weapons map
+          for (const type of i.weaponType ?? []) {
+            if (!tiers[i.tier].Weapons.has(type)) {
+              // add weapons to the list for replacement
+              tiers[i.tier].Weapons.set(type, [{ ...i, rare: false }]);
+            } else {
+              tiers[i.tier].Weapons.get(type)?.push({ ...i, rare: false });
+            }
+            if (i.tier !== 4) {
+              if (!tiers[i.tier + 1].Weapons.has(type)) {
+                // add weapons to the list for replacement
+                tiers[i.tier + 1].Weapons.set(type, [{ ...i, rare: false }]);
+              } else {
+                tiers[i.tier + 1].Weapons.get(type)?.push({
+                  ...i,
+                  rare: false,
+                });
+              }
+            }
+          }
           break;
         case "Tank":
           tiers[i.tier].Items.Tank.push(i as Item);
@@ -230,6 +260,7 @@ export function load(expansionList: string[]) {
     }
   }
 
+  console.log(tiers);
   // Create the storage for all Monsters
   for (const i of monsters) {
     if (
@@ -248,12 +279,16 @@ export function load(expansionList: string[]) {
         name: i.name,
         tier: i.tier.indexOf(t) + 1,
         nemesis: i.nemesis,
+        attributes: [],
       });
     }
   }
 }
 
-export function generateTier(selectedTier: number): Challenge {
+export function generateTier(
+  selectedTier: number,
+  survivors: number = 4
+): Challenge {
   const challenge: Challenge = {
     items: [],
     monster: null,
@@ -305,12 +340,16 @@ export function generateTier(selectedTier: number): Challenge {
       challenge.items.push(generateItem(selectedTier, "Tank"));
       break;
   }
-  challenge.monster = generateMonster(selectedTier);
+  challenge.monster = generateMonster(selectedTier, survivors);
 
   challenge.survivors.push(generateSurvivor(selectedTier));
   challenge.survivors.push(generateSurvivor(selectedTier));
   challenge.survivors.push(generateSurvivor(selectedTier));
   challenge.survivors.push(generateSurvivor(selectedTier));
+
+  for (let i = 4; i < survivors; i++) {
+    challenge.survivors.push(generateSurvivor(selectedTier, true));
+  }
 
   challenge.settlement = generateSettlementDetails(selectedTier);
 
@@ -345,6 +384,7 @@ function generateItem(selectedTier: number, type: keyof ItemsType): Item {
       location: "Starter",
       rare: false,
       expansion: "Core Box",
+      weaponType: [],
     };
   }
 
@@ -359,15 +399,36 @@ export function formatItem(i: Item | null): string {
   return `${i.name}(${i.location})`;
 }
 
-function generateMonster(selectedTier: number): MonsterInfo {
+function generateMonster(
+  selectedTier: number,
+  survivors: number = 4
+): MonsterInfo {
   // find the random index
   const entry = Math.floor(Math.random() * tiers[selectedTier].Monsters.length);
 
-  return tiers[selectedTier].Monsters[entry];
+  const a: string[] = [];
+
+  for (const attribute of tiers[selectedTier].Monsters[entry].attributes) {
+    a.push(attribute);
+  }
+
+  if (survivors === 5) {
+    a.push(`Life ${tiers[selectedTier].Monsters[entry].tier}`);
+  }
+
+  if (survivors === 6) {
+    a.push(`Life ${tiers[selectedTier].Monsters[entry].tier * 2}`);
+    a.push("+1 Speed");
+  }
+
+  return { ...tiers[selectedTier].Monsters[entry], attributes: a };
 }
 
 // generate a player with ages completed
-function generateSurvivor(selectedTier: number): CharacterInfo {
+function generateSurvivor(
+  selectedTier: number,
+  scout?: boolean
+): CharacterInfo {
   const character: CharacterInfo = {
     stats: {
       xp: 0,
@@ -415,7 +476,7 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
   }
 
   // check for a unique survivor
-  if (selectedTier > 0 && Math.random() > 0.95) {
+  if (selectedTier > 0 && !scout && Math.random() > 0.95) {
     //determine the survivor type
     const options = ["Twilight", "Savior"];
 
@@ -765,6 +826,12 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
     character.stats.sfa = 1;
   }
 
+  if (scout) {
+    // this is a scout, generate them appropriately
+    character.title = "Scout";
+    character.abilities.push("Scout Gear Grid (Can't use Death Pact)");
+  }
+
   return character;
 }
 
@@ -873,4 +940,28 @@ export function generateExpansionList(): string {
     html += `<div><input type="checkbox" id="${id}" name="${e}" checked /><label for="${id}">${e}</label></div>\n`;
   }
   return html;
+}
+
+export function formatWeaponList(selectedTier: number): string {
+  let weaponHTML = `<option value=" "></option>`;
+  for (const key of tiers[selectedTier].Weapons.keys()) {
+    weaponHTML += `<option value="${key}">${key}</option>`;
+  }
+  return weaponHTML;
+}
+
+export function getWeapon(selectedTier: number, type: string): string {
+  let weapons = tiers[selectedTier].Weapons.get(type);
+
+  if (weapons)
+    return formatItem(weapons[Math.floor(Math.random() * weapons?.length)]);
+  else return "";
+}
+
+export function getArmour(selectedTier: number): string {
+  let armours = tiers[selectedTier].Items.Armour;
+
+  if (armours)
+    return formatItem(armours[Math.floor(Math.random() * armours?.length)]);
+  else return "";
 }

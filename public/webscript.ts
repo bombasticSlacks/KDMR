@@ -5,6 +5,9 @@ import {
   formatSurvivor,
   generateExpansionList,
   load,
+  formatWeaponList,
+  getWeapon,
+  getArmour,
 } from "./generator.js";
 
 const generator = document.querySelector("#generator") as HTMLFormElement;
@@ -17,15 +20,27 @@ const survivors = document.querySelector("#survivorDetails");
 const gear = document.querySelector("#gearDetails");
 const settlement = document.querySelector("#settlementDetails");
 const hunt = document.querySelector("#huntOr");
+const weaponSelect = document.querySelector("#weaponSelect");
+const weaponResult = document.querySelector("#weaponResult");
+const armourSelect = document.querySelector("#armourSelect");
+const armourResult = document.querySelector("#armourResult");
+
+let currentTier = 0;
 
 // gen expansion list
 if (expansionList) expansionList.innerHTML = generateExpansionList();
 
 if (generator) {
   generator.addEventListener("submit", (event) => {
+    if (weaponResult) weaponResult.innerHTML = "";
     const data = new FormData(generator);
 
-    const challenge = generateTier(Number(data.get("tier")));
+    currentTier = Number(data.get("tier"));
+
+    const challenge = generateTier(
+      Number(data.get("tier")),
+      Number(data.get("count"))
+    );
 
     if (monster && challenge.monster && hunt) {
       if (challenge.monster.nemesis) {
@@ -33,19 +48,23 @@ if (generator) {
       } else {
         hunt.innerHTML = `They Hunt`;
       }
-      monster.innerHTML = `Level ${challenge.monster.tier} ${challenge.monster.name}`;
+
+      let attributes = "";
+
+      for (const a of challenge.monster.attributes) {
+        attributes += `${a}, `;
+      }
+
+      monster.innerHTML = `<h3>Level ${challenge.monster.tier} ${challenge.monster.name}</h3><p>${attributes}</p>`;
     }
 
-    if (survivors)
-      survivors.innerHTML = `<div class="character">${formatSurvivor(
-        challenge.survivors[0]
-      )}</div> <div class="character">${formatSurvivor(
-        challenge.survivors[1]
-      )}</div> <div class="character">${formatSurvivor(
-        challenge.survivors[2]
-      )}</div> <div class="character">${formatSurvivor(
-        challenge.survivors[3]
-      )}</div>`;
+    if (survivors) {
+      let survivorHTML = "";
+      for (const s of challenge.survivors) {
+        survivorHTML += `<div class="character">${formatSurvivor(s)}</div>`;
+      }
+      survivors.innerHTML = survivorHTML;
+    }
 
     let gearHTML = "";
     for (const i of challenge.items) {
@@ -55,6 +74,11 @@ if (generator) {
 
     if (settlement && challenge.settlement)
       settlement.innerHTML = formatSettlementDetails(challenge.settlement);
+
+    // generate weapon list for replacement
+    if (weaponSelect) {
+      weaponSelect.innerHTML = formatWeaponList(Number(data.get("tier")));
+    }
 
     event.preventDefault();
   });
@@ -77,10 +101,25 @@ if (optionsForm) {
   });
 }
 
+if (weaponSelect && weaponResult) {
+  weaponSelect.addEventListener("change", (event) => {
+    weaponResult.innerHTML = getWeapon(
+      currentTier,
+      (event as any).target.value
+    );
+  });
+}
+
 if (options && optionsMenu) {
   options.addEventListener("click", (event) => {
     (optionsMenu as HTMLElement).style.visibility === "visible"
       ? ((optionsMenu as HTMLElement).style.visibility = "collapse")
       : ((optionsMenu as HTMLElement).style.visibility = "visible");
+  });
+}
+
+if (armourResult && armourSelect) {
+  armourSelect.addEventListener("click", (event) => {
+    armourResult.innerHTML = getArmour(currentTier);
   });
 }

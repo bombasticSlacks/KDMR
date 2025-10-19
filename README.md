@@ -24,3 +24,4 @@ Randomizes battles to do in KDM
 - Add 5/6 player rules from Fen, using the scouts of death. Have card, add
 - Chance for wanderers.
 - Reroll buttons.
+- Need to better use tier 4.
