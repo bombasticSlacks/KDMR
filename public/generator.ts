@@ -53,6 +53,10 @@ interface SettlementInfo {
 
 interface CharacterInfo {
   stats: {
+    xp: number;
+    courage: number;
+    understanding: number;
+    insanity: number;
     strength: number;
     evasion: number;
     accuracy: number;
@@ -62,8 +66,9 @@ interface CharacterInfo {
     fa: number;
     sfa: number;
     choose: number;
+    disorders: number;
   };
-  abilities: [];
+  abilities: string[];
   title: string;
 }
 
@@ -135,6 +140,8 @@ const tiers: tier[] = [T0, T1, T2, T3, T4];
 
 const expansions: Set<string> = new Set<string>();
 
+let enabledExpansions: Set<string> = new Set<string>();
+
 // load everything initially
 load([]);
 
@@ -153,6 +160,7 @@ export function load(expansionList: string[]) {
       Monsters: [],
     };
   }
+  enabledExpansions = new Set<string>();
 
   // Create the storage for all tiers and types
   for (const i of items) {
@@ -170,6 +178,7 @@ export function load(expansionList: string[]) {
 
     // add expansions for items
     expansions.add(i.expansion);
+    enabledExpansions.add(i.expansion);
 
     for (const type of i.type) {
       switch (type) {
@@ -231,6 +240,8 @@ export function load(expansionList: string[]) {
       continue;
     }
     expansions.add(i.expansion);
+    enabledExpansions.add(i.expansion);
+
     for (const t of i.tier) {
       // add monsters to each tier with their level in brackets
       tiers[t].Monsters.push({
@@ -359,6 +370,10 @@ function generateMonster(selectedTier: number): MonsterInfo {
 function generateSurvivor(selectedTier: number): CharacterInfo {
   const character: CharacterInfo = {
     stats: {
+      xp: 0,
+      courage: 0,
+      understanding: 0,
+      insanity: 0,
       strength: 0,
       evasion: 0,
       accuracy: 0,
@@ -368,13 +383,188 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
       fa: 0,
       choose: 0,
       sfa: 0,
+      disorders: 0,
     },
     abilities: [],
     title: "Survivor",
   };
 
+  // set XP
+  character.stats.xp =
+    selectedTier * 3 + Math.floor(Math.random() * (3 * selectedTier));
+
+  if (character.stats.xp >= 16) {
+    character.stats.xp = 16;
+    character.abilities.push("Ageless");
+  }
+
+  // set courage and understanding
+  character.stats.courage =
+    selectedTier - 2 + Math.floor(Math.random() * (selectedTier * 3));
+  character.stats.understanding =
+    selectedTier - 2 + Math.floor(Math.random() * (selectedTier * 3));
+
+  if (character.stats.courage < 0) character.stats.courage = 0;
+  if (character.stats.understanding < 0) character.stats.understanding = 0;
+
+  // set insanity
+  if (selectedTier === 0) {
+    character.stats.insanity = Math.floor(Math.random() * 2);
+  } else {
+    character.stats.insanity = Math.ceil(roll() / 2);
+  }
+
+  // check for a unique survivor
+  if (selectedTier > 0 && Math.random() > 0.95) {
+    //determine the survivor type
+    const options = ["Twilight", "Savior"];
+
+    if (enabledExpansions.has("Dragon King") && selectedTier >= 2)
+      options.push("Constellation");
+    if (enabledExpansions.has("Sunstalker") && selectedTier >= 2)
+      options.push("Katana");
+    if (enabledExpansions.has("Community Edition")) options.push("Kingsman");
+
+    const type = Math.floor(Math.random() * options.length);
+    switch (options[type]) {
+      case "Twilight":
+        character.title = "Twilight Knight";
+        character.abilities.push("Twilight Sword (Gear)");
+        character.abilities.push(
+          `Twilight Sword Proficiency ${
+            selectedTier + Math.floor(Math.random() * selectedTier) + 2
+          } Ranks`
+        );
+        break;
+      case "Savior":
+        // determine dream
+        const dreams = ["Beast", "Crown", "Lantern"];
+        const dream = dreams[Math.floor(Math.random() * dreams.length)];
+
+        switch (dream) {
+          case "Beast":
+            //Beast
+            character.title = "Dreamer Of The Beast";
+            character.stats.strength += 1;
+            character.abilities.push("+1 red affinity");
+            character.abilities.push("Caratosis");
+            character.abilities.push("Life Exchange");
+            if (character.stats.xp >= 6) {
+              character.abilities.push(
+                "Beast Of Caratosis (Secret Fighting Art)"
+              );
+            }
+            if (character.stats.understanding >= 7) {
+              // saviors shouldn't immediately cease to exist
+              character.stats.understanding = 7;
+            }
+            break;
+          case "Crown":
+            //crown
+            character.title = "Dreamer Of The Crown";
+            character.stats.evasion += 1;
+            character.abilities.push("+1 green affinity");
+            character.abilities.push("Dormenatus");
+            character.abilities.push("Life Exchange");
+            if (character.stats.xp >= 6) {
+              character.abilities.push(
+                "Grace Of Dormenatus (Secret Fighting Art)"
+              );
+            }
+            if (character.stats.understanding >= 7) {
+              // saviors shouldn't immediately cease to exist
+              character.stats.understanding = 7;
+            }
+            break;
+          case "Lantern":
+            //lantern
+            character.title = "Dreamer Of The Lantern";
+            character.stats.luck += 1;
+            character.abilities.push("+1 blue affinity");
+            character.abilities.push("Lucernae");
+            character.abilities.push("Life Exchange");
+            if (character.stats.xp >= 6) {
+              character.abilities.push(
+                "Lucernae's Lantern (Secret Fighting Art)"
+              );
+            }
+            if (character.stats.understanding >= 7) {
+              // saviors shouldn't immediately cease to exist
+              character.stats.understanding = 7;
+            }
+            break;
+        }
+        break;
+      case "Constellation":
+        let constellations = [
+          "Absolute",
+          "Gambler",
+          "Reaper",
+          "Rust",
+          "Storm",
+          "Witch",
+        ];
+
+        const constellation =
+          constellations[Math.floor(Math.random() * constellations.length)];
+        character.title = `Born Under ${constellation}`;
+        // select a constellation
+        switch (constellation) {
+          case "Absolute":
+            character.stats.evasion += 1;
+            character.stats.movement += 1;
+            character.abilities.push("Rooted to All");
+            break;
+          case "Gambler":
+            character.stats.insanity += 100;
+            character.abilities.push("Immortal");
+            character.abilities.push("Twelve Fingers");
+            break;
+          case "Reaper":
+            character.stats.accuracy += 3;
+            character.abilities.push("Psychovore");
+            break;
+          case "Rust":
+            character.abilities.push("Tough (Fighting Art)");
+            character.abilities.push("Way of the Rust");
+            break;
+          case "Storm":
+            character.stats.speed += 1;
+            character.abilities.push("Destined");
+            character.abilities.push("Heart of the Sword");
+            break;
+          case "Witch":
+            character.stats.speed += 1;
+            character.stats.luck += 1;
+            character.abilities.push("Presage");
+        }
+
+        break;
+      case "Katana":
+        character.title = "Katana Specialist";
+        character.abilities.push("Katana Proficiency 5 Ranks");
+        character.abilities.push("Eyepatch (Gear)");
+        character.abilities.push("Rainbow Katana (Gear)");
+        character.abilities.push("Blood Sheath (Gear)");
+        break;
+      case "Kingsman":
+        character.title = "Cursed";
+        if (selectedTier === 1) {
+          character.abilities.push("Kings Curse (Event) X2");
+        } else if (selectedTier === 2) {
+          character.abilities.push("Kings Curse (Event) X4");
+        } else {
+          character.title = "Unlikely Ally";
+          character.abilities.push("Regal Armour (Gear)");
+          character.abilities.push("Lantern Halberd (Gear)");
+          character.abilities.push("Kings Step (Secret Fighting Art)");
+        }
+        break;
+    }
+  }
+
   // Age 1
-  if (selectedTier >= 1) {
+  if (character.stats.xp >= 2) {
     const val = roll() + roll();
     if (val === 2) {
       character.stats.evasion += 1;
@@ -393,7 +583,7 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
   }
 
   // Age 2
-  if (selectedTier >= 2) {
+  if (character.stats.xp >= 6) {
     const val = roll() + roll();
     if (val === 2) {
       character.stats.movement += 1;
@@ -412,7 +602,7 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
   }
 
   // Age 3
-  if (selectedTier >= 3) {
+  if (character.stats.xp >= 10) {
     const val = roll() + roll();
     if (val === 2) {
       character.stats.speed += 1;
@@ -431,7 +621,7 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
   }
 
   // Age 4
-  if (selectedTier >= 4) {
+  if (character.stats.xp >= 15) {
     const val = roll() + roll();
     if (val === 2) {
       character.stats.fa += 5;
@@ -449,22 +639,150 @@ function generateSurvivor(selectedTier: number): CharacterInfo {
     if (roll() > 9) character.stats.sfa = 1;
   }
 
+  // Bold
+  if (character.stats.courage >= 3) {
+    // determine when it happened
+    const boldRoll = roll();
+
+    if (boldRoll <= 3) {
+      // settlement
+      character.abilities.push(
+        'Dependent: "If someone dies during the hunt phase, you may replace them in the showdown with a new survivor with no abilities or attributes"'
+      );
+
+      const val = roll();
+      if (val === 10) {
+        character.stats.accuracy += 1;
+      } else if (val >= 8) {
+        character.stats.strength += 1;
+      }
+    } else if (boldRoll <= 6) {
+      //hunt
+      character.abilities.push("Prepared");
+
+      const val = roll();
+      if (val === 10) {
+        character.stats.movement += 1;
+      } else if (val >= 8) {
+        character.stats.strength += 1;
+      }
+    } else {
+      //showdown
+      character.abilities.push("Stalwart");
+
+      const val = roll();
+      if (val === 10) {
+        character.stats.speed += 1;
+      } else if (val >= 8) {
+        character.stats.strength += 1;
+      }
+    }
+  }
+
+  // Insight
+  if (character.stats.understanding >= 3) {
+    // determine when it happened
+    const understandingRoll = roll();
+
+    if (understandingRoll <= 3) {
+      // settlement
+      character.abilities.push('Handy: "Gain an additional ✪"');
+
+      const val = roll();
+      if (val === 10) {
+        character.stats.strength += 1;
+      } else if (val >= 8) {
+        character.stats.accuracy += 1;
+      }
+    } else if (understandingRoll <= 6) {
+      //hunt
+      character.abilities.push("Explore");
+
+      const val = roll();
+      if (val === 10) {
+        character.stats.evasion += 1;
+      } else if (val >= 8) {
+        character.stats.accuracy += 1;
+      }
+    } else {
+      //showdown
+      character.abilities.push("Analyze");
+
+      const val = roll();
+      if (val === 10) {
+        character.stats.movement += 1;
+      } else if (val >= 8) {
+        character.stats.accuracy += 1;
+      }
+    }
+  }
+
+  // See the truth
+  if (character.stats.courage >= 9) {
+    character.stats.courage = 9;
+    character.abilities.push("Blind (Severe Injury)");
+    const val = roll();
+    if (val <= 2) {
+      //sweet
+      character.abilities.push("Weak Spot (Disorder)");
+      character.abilities.push("Sweet Battle");
+    } else if (val <= 8) {
+      //bitter
+      character.abilities.push("Berserker (Fighting Art)");
+      character.abilities.push("Bitter Frenzy");
+    } else {
+      //sour
+      character.abilities.push("Sour Death");
+    }
+  }
+
+  // White Secret
+  if (character.stats.understanding >= 9) {
+    character.stats.understanding = 9;
+    character.stats.insanity += Math.ceil(roll() / 2);
+    character.stats.disorders += 1;
+    const val = roll();
+    if (val <= 2) {
+      //Ageless
+      character.stats.accuracy += 1;
+      character.stats.strength += 1;
+      if (character.stats.xp < 16) {
+        // already have it otherwise
+        character.abilities.push("Ageless");
+      }
+    } else if (val <= 8) {
+      //Survivor
+      character.abilities.push("Quixotic (Disorder)");
+      character.abilities.push("Peerless");
+    } else {
+      //Invisible Hair
+      character.abilities.push("Extra Sense (Fighting Art)");
+      character.abilities.push("Leyline Walker");
+    }
+  }
+
+  if (character.stats.sfa >= 1) {
+    character.stats.sfa = 1;
+  }
+
   return character;
 }
 
 export function formatSurvivor(c: CharacterInfo): string {
   let character = ``;
   let stats = "";
+  let abilities = "";
   for (const key of Object.keys(c.stats)) {
     if (c.stats[key as keyof typeof c.stats] > 0) {
       stats += `+${c.stats[key as keyof typeof c.stats]} ${key},`;
     }
   }
 
-  character += characterHelper(stats);
+  for (const a of c.abilities) {
+    abilities += `${a}, `;
+  }
 
-  //character += `\n Abilities: `;
-
+  character += characterHelper(stats, abilities, c.title);
   return character;
 }
 
@@ -527,8 +845,12 @@ export function formatSettlementDetails(c: SettlementInfo): string {
   return settlement;
 }
 
-function characterHelper(val: string): string {
-  return `<div class=settlementAttribute><h3 class=settlementTitle>Survivor</h3><p class=settlementValue>${val}</p></div>`;
+function characterHelper(
+  val: string,
+  abilities: string,
+  title: string
+): string {
+  return `<div class=settlementAttribute><h3 class=settlementTitle>${title}</h3><p class=settlementValue>${val}</p><p class=settlementValue>${abilities}</p></div>`;
 }
 
 function settlementHelper(title: string, val: number): string {

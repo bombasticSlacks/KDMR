@@ -16,6 +16,11 @@
                 <button type="submit">Load</button>
             </div>
         </form>
+        <h3>Rules:</h3>
+        <p>If anything during camp causes a survivor to not be able to depart (or die), perform the random action again.
+        </p>
+        <p>All gear in the gear section is not assigned until camp phase ends (this includes cursed gear).</p>
+        <p>Specializations and masteries are assigned to specific survivors before departure.</p>
     </div>
     <div id="title">
         <h1>Wanderers:</h1>
@@ -25,6 +30,7 @@
         <form id="generator">
             <fieldset>
                 <h2> Survey The Camp </h2>
+                <p class="question">Who are they?</p>
                 <div>
                     <input title="Survivors Just Starting Out" type="radio" id="0" name="tier" value="0" checked />
                     <label for="0">Survivors with ink still in their eyes</label>
@@ -43,6 +49,14 @@
                     <input title="Anything goes" type="radio" id="3" name="tier" value="3" />
                     <label for="3">Veterans with an assortment of gear</label>
                 </div>
+                <div class="flex question">
+                    <p>How many sit around the fire?</p>
+                    <select name="count" id="count">
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
                 <div>
                     <button type="submit">Inspect</button>
                 </div>
@@ -51,7 +65,7 @@
 
         <div id="gear" class="info">
             <h2>They Carry</h2>
-            <p id="gearDetails"></p>
+            <div id="gearDetails"></div>
         </div>
         <div id="monster" class="info">
             <h2 id="huntOr">They Hunt</h2>
@@ -59,15 +73,15 @@
         </div>
         <div id="characters" class="info">
             <h2>They Are</h2>
-            <p id="survivorDetails"></p>
+            <div id="survivorDetails"></div>
         </div>
 
         <div id="settlement" class="info">
             <h2>Their Camp Provides</h2>
-            <p id="settlementDetails"></p>
+            <div id="settlementDetails"></div>
         </div>
     </div>
-    <h1>You Each May Endeavor Before Departing: ✪✪✪✪</h1>
+    <h1>You Each May Endeavor At Camp Before Departing: ✪✪✪✪</h1>
     <div id="endeavors">
         <div class="info">
             <p class="flavour">A shrine rests slightly away from the fire</p>
@@ -140,11 +154,21 @@
                 <li>8: Gain "Your complete affinities and incomplete affinity halves count as all colours." ability</li>
                 <li>9-10: Choose your outcome</li>
             </ul>
+            <br />
+            <p>Roll Hit Location</p>
+            <ul>
+                <li>Head: Suffer Deaf</li>
+                <li>Body: Suffer Broken Rib</li>
+                <li>Legs: Suffer Broken Leg</li>
+                <li>Arms: Suffer Broken Arm</li>
+                <li>Waist: Suffer Broken Hip</li>
+            </ul>
         </div>
     </div>
     <footer>
         <button id="optionsButton">Options</button>
         Built From: <a href="https://github.com/bombasticSlacks/KDMR">https://github.com/bombasticSlacks/KDMR</a>
+
     </footer>
 </body>
 

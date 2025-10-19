@@ -1106,6 +1106,7 @@ export const items: Item[] = [
     tier: 2,
     location: "Rare Gear",
     expansion: "Sunstalker",
+    rare: true,
   },
   {
     name: "Sunring Bow",
@@ -1113,6 +1114,7 @@ export const items: Item[] = [
     tier: 3,
     location: "Rare Gear",
     expansion: "Sunstalker",
+    rare: true,
   },
   {
     name: "Apostle Crown",
@@ -1120,6 +1122,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Rare Gear",
     expansion: "Sunstalker",
+    rare: true,
   },
   {
     name: "Prism Mace",
@@ -1127,6 +1130,7 @@ export const items: Item[] = [
     tier: 4,
     location: "Rare Gear",
     expansion: "Sunstalker",
+    rare: true,
   },
   {
     name: "Vespertine Bow",
@@ -1387,30 +1391,6 @@ export const items: Item[] = [
     tier: 2,
     location: "Sanguine Extrusion",
     expansion: "Red Witches",
-  },
-  {
-    name: "Regal Armor (2 pieces)",
-    type: ["Armour"],
-    tier: 2,
-    location: "Rare Gear(CE)",
-    rare: true,
-    expansion: "Community Edition",
-  },
-  {
-    name: "Regal Armor (4 pieces)",
-    type: ["Armour"],
-    tier: 3,
-    location: "Rare Gear(CE)",
-    rare: true,
-    expansion: "Community Edition",
-  },
-  {
-    name: "Regal Armor (5 pieces) and Lantern Halberd",
-    type: ["Armour"],
-    tier: 4,
-    location: "Rare Gear(CE)",
-    rare: true,
-    expansion: "Community Edition",
   },
   {
     name: "Warlord Armor",
@@ -1725,8 +1705,8 @@ export const items: Item[] = [
     expansion: "Manhunter",
   },
   {
-    name: "Mahunters Hat (With Rawhide Armor and Outfit Keyword)",
-    type: ["Armour"],
+    name: "Mahunters Hat",
+    type: ["Accessory"],
     tier: 2,
     location: "Rare Gear",
     rare: true,

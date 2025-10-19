@@ -9,6 +9,7 @@ html {
 
 #details,
 #endeavors,
+#survivorDetails,
 .flex {
   display: flex;
   flex-wrap: wrap;
@@ -99,4 +100,13 @@ footer {
   height: 100%;
   background-color: #222222;
   padding: 2em;
+}
+
+select {
+  background-color: #222222;
+  margin-left: 0.5em;
+}
+
+.question {
+  padding: 0.5em;
 }

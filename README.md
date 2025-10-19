@@ -2,6 +2,13 @@
 
 Randomizes battles to do in KDM
 
+## Features
+
+- Select a tier of characters and it will generate you survivors, gear and a monster/nemesis
+- Sometimes generates unique survivors from different expansions (Saviors, twilight nights, constellation havers)
+- Set which expansions you own in options
+- Stuff to do around camp before departure
+
 ## Tiers
 
 - 0 Starting out
@@ -13,11 +20,7 @@ Randomizes battles to do in KDM
 ## Todo
 
 - Figure out a set for Flower Knight Helm to accessory with.
-- Add more variance for survivors
 - Add more variance composition (1-2 lower level characters)
 - Add 5/6 player rules from Fen, using the scouts of death. Have card, add
-- Chance for "Saviors", chance for celestials, chance for wanderers.
-- Specify characters hunt xp, courage, and wisdom, start with some insanity.
-- Options for available expansions.
+- Chance for wanderers.
 - Reroll buttons.
-- More details for stuff like twilight sword.

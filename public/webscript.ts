@@ -37,15 +37,15 @@ if (generator) {
     }
 
     if (survivors)
-      survivors.innerHTML = `<div class="character"><p>${formatSurvivor(
+      survivors.innerHTML = `<div class="character">${formatSurvivor(
         challenge.survivors[0]
-      )}</p></div> <div class="character"><p>${formatSurvivor(
+      )}</div> <div class="character">${formatSurvivor(
         challenge.survivors[1]
-      )}</p></div> <div class="character"><p>${formatSurvivor(
+      )}</div> <div class="character">${formatSurvivor(
         challenge.survivors[2]
-      )}</p></div> <div class="character"><p>${formatSurvivor(
+      )}</div> <div class="character">${formatSurvivor(
         challenge.survivors[3]
-      )}</p></div>`;
+      )}</div>`;
 
     let gearHTML = "";
     for (const i of challenge.items) {
