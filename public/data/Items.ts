@@ -1,4 +1,13 @@
-export const items = [
+interface Item {
+  name: string;
+  type: string[];
+  tier: number;
+  location: string;
+  rare?: boolean | null;
+  expansion: string;
+}
+
+export const items: Item[] = [
   {
     name: "Cloth",
     type: ["Armour"],
@@ -6,7 +15,13 @@ export const items = [
     location: "Starter",
     expansion: "Core Box",
   },
-  { name: "Founding Stone", type: ["Accessory"], tier: 0, location: "Starter" },
+  {
+    name: "Founding Stone",
+    type: ["Accessory"],
+    tier: 0,
+    location: "Starter",
+    expansion: "Core Box",
+  },
   {
     name: "Rawhide Armor",
     type: ["Armour"],

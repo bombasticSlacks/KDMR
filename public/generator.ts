@@ -22,6 +22,7 @@ interface Monster {
   name: string;
   tier: number[];
   nemesis: boolean;
+  expansion: string;
 }
 
 interface MonsterInfo {
@@ -132,70 +133,112 @@ const T4: tier = {
 };
 const tiers: tier[] = [T0, T1, T2, T3, T4];
 
-// Create the storage for all tiers and types
-for (const i of items) {
-  if ((i as Item).rare === undefined) {
-    i.rare = false;
-  }
-  for (const type of i.type) {
-    switch (type) {
-      case "Accessory":
-        // add all accessories to every tier above as well
-        for (let t = i.tier; t < 5; t++) {
-          tiers[t].Items.Accessory.push(i as Item);
-          // make rare gear half as likely
-          if (!i.rare) tiers[t].Items.Accessory.push(i as Item);
-        }
-        break;
-      case "Armour":
-        // add almost all armour to every tier above as well
-        if (i.tier > 0) {
-          for (let t = i.tier; t < 5; t++) {
-            tiers[t].Items.Armour.push(i as Item);
-            // make rare gear half as likely
-            if (!i.rare) tiers[t].Items.Armour.push(i as Item);
-          }
-        } else {
-          // tier 0 is added to tier 1 as well not everyone has full armour sets early
-          tiers[i.tier].Items.Armour.push(i as Item);
-          tiers[i.tier + 1].Items.Armour.push(i as Item);
-          tiers[i.tier + 1].Items.Armour.push(i as Item);
-        }
-        break;
-      case "Support":
-        // add all support to every tier above as well
-        for (let t = i.tier; t < 5; t++) {
-          tiers[t].Items.Support.push(i as Item);
-          if (!i.rare) tiers[t].Items.Support.push(i as Item);
-        }
-        break;
-      case "Weapon":
-        // weapons can be used 1 tier above
-        tiers[i.tier].Items.Weapon.push(i as Item);
-        if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
+const expansions: Set<string> = new Set<string>();
 
-        if (i.tier !== 4) {
-          tiers[i.tier + 1].Items.Weapon.push(i as Item);
+// load everything initially
+load([]);
+
+export function load(expansionList: string[]) {
+  // make sure the arrays are empty
+  for (let i = 0; i < 5; i++) {
+    tiers[i] = {
+      Items: {
+        Armour: [],
+        Accessory: [],
+        Support: [],
+        Weapon: [],
+        Tank: [],
+        Blacklist: [],
+      },
+      Monsters: [],
+    };
+  }
+
+  // Create the storage for all tiers and types
+  for (const i of items) {
+    if (
+      expansionList.length !== 0 &&
+      expansionList.indexOf(i.expansion) === -1
+    ) {
+      // omit this item as it isn't an included expansion
+      continue;
+    }
+    // set missing info for non-rare items
+    if ((i as Item).rare === undefined) {
+      i.rare = false;
+    }
+
+    // add expansions for items
+    expansions.add(i.expansion);
+
+    for (const type of i.type) {
+      switch (type) {
+        case "Accessory":
+          // add all accessories to every tier above as well
+          for (let t = i.tier; t < 5; t++) {
+            tiers[t].Items.Accessory.push(i as Item);
+            // make rare gear half as likely
+            if (!i.rare) tiers[t].Items.Accessory.push(i as Item);
+          }
+          break;
+        case "Armour":
+          // add almost all armour to every tier above as well
+          if (i.tier > 0) {
+            for (let t = i.tier; t < 5; t++) {
+              tiers[t].Items.Armour.push(i as Item);
+              // make rare gear half as likely
+              if (!i.rare) tiers[t].Items.Armour.push(i as Item);
+            }
+          } else {
+            // tier 0 is added to tier 1 as well not everyone has full armour sets early
+            tiers[i.tier].Items.Armour.push(i as Item);
+            tiers[i.tier + 1].Items.Armour.push(i as Item);
+            tiers[i.tier + 1].Items.Armour.push(i as Item);
+          }
+          break;
+        case "Support":
+          // add all support to every tier above as well
+          for (let t = i.tier; t < 5; t++) {
+            tiers[t].Items.Support.push(i as Item);
+            if (!i.rare) tiers[t].Items.Support.push(i as Item);
+          }
+          break;
+        case "Weapon":
+          // weapons can be used 1 tier above
+          tiers[i.tier].Items.Weapon.push(i as Item);
           if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
-        }
-        break;
-      case "Tank":
-        tiers[i.tier].Items.Tank.push(i as Item);
-        if (!i.rare) tiers[i.tier].Items.Tank.push(i as Item);
-        break;
+
+          if (i.tier !== 4) {
+            tiers[i.tier + 1].Items.Weapon.push(i as Item);
+            if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
+          }
+          break;
+        case "Tank":
+          tiers[i.tier].Items.Tank.push(i as Item);
+          if (!i.rare) tiers[i.tier].Items.Tank.push(i as Item);
+          break;
+      }
     }
   }
-}
 
-// Create the storage for all Monsters
-for (const i of monsters) {
-  for (const t of i.tier) {
-    // add monsters to each tier with their level in brackets
-    tiers[t].Monsters.push({
-      name: i.name,
-      tier: i.tier.indexOf(t) + 1,
-      nemesis: i.nemesis,
-    });
+  // Create the storage for all Monsters
+  for (const i of monsters) {
+    if (
+      expansionList.length !== 0 &&
+      expansionList.indexOf(i.expansion) === -1
+    ) {
+      // omit this item as it isn't an included expansion
+      continue;
+    }
+    expansions.add(i.expansion);
+    for (const t of i.tier) {
+      // add monsters to each tier with their level in brackets
+      tiers[t].Monsters.push({
+        name: i.name,
+        tier: i.tier.indexOf(t) + 1,
+        nemesis: i.nemesis,
+      });
+    }
   }
 }
 
@@ -494,4 +537,18 @@ function settlementHelper(title: string, val: number): string {
 
 function settlementHelperCheck(title: string): string {
   return `<div class=settlementAttribute><h3 class=settlementTitle>${title}</h3><p class=settlementValue>✓</p></div>`;
+}
+
+export function generateExpansionList(): string {
+  let html = ``;
+  const sortedExpansions: string[] = [];
+  for (const e of expansions) {
+    sortedExpansions.push(e);
+  }
+
+  for (const e of sortedExpansions.sort()) {
+    const id = e.replace(/ /g, "_");
+    html += `<div><input type="checkbox" id="${id}" name="${e}" checked /><label for="${id}">${e}</label></div>\n`;
+  }
+  return html;
 }

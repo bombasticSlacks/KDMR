@@ -8,12 +8,21 @@
 </head>
 
 <body>
+    <div id="options">
+        <h3>Content:</h3>
+        <form id="optionsForm">
+            <div id="expansionList"></div>
+            <div>
+                <button type="submit">Load</button>
+            </div>
+        </form>
+    </div>
     <div id="title">
         <h1>Wanderers:</h1>
         <p> 4 survivors sit around a fire in the plain of faces, they either hunt or are hunted. </p>
     </div>
     <div id="details">
-        <form>
+        <form id="generator">
             <fieldset>
                 <h2> Survey The Camp </h2>
                 <div>
@@ -35,7 +44,7 @@
                     <label for="3">Veterans with an assortment of gear</label>
                 </div>
                 <div>
-                    <button type="generate">Inspect</button>
+                    <button type="submit">Inspect</button>
                 </div>
             </fieldset>
         </form>
@@ -134,6 +143,7 @@
         </div>
     </div>
     <footer>
+        <button id="optionsButton">Options</button>
         Built From: <a href="https://github.com/bombasticSlacks/KDMR">https://github.com/bombasticSlacks/KDMR</a>
     </footer>
 </body>

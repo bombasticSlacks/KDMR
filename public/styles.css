@@ -1,7 +1,10 @@
 * {
-  background-color: #1d1d1d;
   color: whitesmoke;
   font-family: "Courier New", Courier;
+}
+
+html {
+  background-color: #1d1d1d;
 }
 
 #details,
@@ -9,6 +12,10 @@
 .flex {
   display: flex;
   flex-wrap: wrap;
+}
+
+#endeavors {
+  margin-bottom: 2em;
 }
 
 H1 {
@@ -26,13 +33,14 @@ button {
   border-radius: 1em;
   margin: 1em;
   width: fit-content;
+  background-color: #1d1d1d;
 }
 
 .character {
   width: fit-content;
 }
 
-form,
+#generator,
 .info {
   border: solid;
   border-radius: 1em;
@@ -69,4 +77,26 @@ fieldset {
 
 .flavour {
   font-style: italic;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 0.4em;
+  width: 100%;
+  margin-top: 2em;
+  background-color: #222222;
+}
+
+#options {
+  width: fit-content;
+  visibility: collapse;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: #222222;
+  padding: 2em;
 }
