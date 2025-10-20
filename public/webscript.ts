@@ -7,7 +7,7 @@ import {
   load,
   formatWeaponList,
   getWeapon,
-  getArmour,
+  getItem,
 } from "./generator.js";
 
 const generator = document.querySelector("#generator") as HTMLFormElement;
@@ -24,6 +24,8 @@ const weaponSelect = document.querySelector("#weaponSelect");
 const weaponResult = document.querySelector("#weaponResult");
 const armourSelect = document.querySelector("#armourSelect");
 const armourResult = document.querySelector("#armourResult");
+const accessorySelect = document.querySelector("#accessorySelect");
+const accessoryResult = document.querySelector("#accessoryResult");
 
 let currentTier = 0;
 
@@ -124,6 +126,12 @@ if (options && optionsMenu) {
 
 if (armourResult && armourSelect) {
   armourSelect.addEventListener("click", (event) => {
-    armourResult.innerHTML = getArmour(currentTier);
+    armourResult.innerHTML = getItem(currentTier, "Armour");
+  });
+}
+
+if (accessoryResult && accessorySelect) {
+  accessorySelect.addEventListener("click", (event) => {
+    accessoryResult.innerHTML = getItem(currentTier, "Accessory");
   });
 }

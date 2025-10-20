@@ -19,9 +19,7 @@ Randomizes battles to do in KDM
 
 ## Todo
 
-- Figure out a set for Flower Knight Helm to accessory with.
-- Add more variance composition (1-2 lower level characters)
-- Add 5/6 player rules from Fen, using the scouts of death. Have card, add
 - Chance for wanderers.
-- Reroll buttons.
-- Need to better use tier 4.
+- Gamblers Chest
+- Characters
+- Frogdog

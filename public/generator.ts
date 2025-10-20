@@ -450,9 +450,55 @@ function generateSurvivor(
     title: "Survivor",
   };
 
+  let honorific = "";
+
+  // give an honorific 20% of the time
+  if (roll() > 8) {
+    const honourifics = ["Inexperienced", "Injured", "Veteran"];
+
+    switch (honourifics[Math.floor(Math.random() * honourifics.length)]) {
+      case "Inexperience":
+        // young survivor
+        honorific = "Inexperience";
+        if (selectedTier > 0) selectedTier--;
+        break;
+      case "Injured":
+        honorific = "Injured";
+        const validInjuries: string[] = [
+          "Deaf",
+          "Blind",
+          "Shatterd Jaw",
+          "Dismembered Arm",
+          "Ruptured Muscle",
+          "Broken Arm",
+          "Contracture",
+          "Gaping Chest Wound",
+          "Destroyed Back",
+          "Broken Rib",
+          "Warped Pelvis",
+          "Broken Hip",
+          "Dismembered Leg",
+          "Hamstrung",
+          "Broken Leg",
+        ];
+
+        character.abilities.push(
+          `${
+            validInjuries[Math.floor(Math.random() * validInjuries.length)]
+          } (Injury)`
+        );
+        break;
+      case "Veteran":
+        honorific = "Veteran";
+        if (selectedTier < 4) selectedTier++;
+        break;
+    }
+  }
+
   // set XP
   character.stats.xp =
-    selectedTier * 3 + Math.floor(Math.random() * (3 * selectedTier));
+    Math.floor(selectedTier * 2.5) +
+    Math.floor(Math.random() * (2 * selectedTier));
 
   if (character.stats.xp >= 16) {
     character.stats.xp = 16;
@@ -461,9 +507,9 @@ function generateSurvivor(
 
   // set courage and understanding
   character.stats.courage =
-    selectedTier - 2 + Math.floor(Math.random() * (selectedTier * 3));
+    selectedTier - 1 + Math.floor(Math.random() * (selectedTier * 2));
   character.stats.understanding =
-    selectedTier - 2 + Math.floor(Math.random() * (selectedTier * 3));
+    selectedTier - 1 + Math.floor(Math.random() * (selectedTier * 2));
 
   if (character.stats.courage < 0) character.stats.courage = 0;
   if (character.stats.understanding < 0) character.stats.understanding = 0;
@@ -829,8 +875,12 @@ function generateSurvivor(
   if (scout) {
     // this is a scout, generate them appropriately
     character.title = "Scout";
-    character.abilities.push("Scout Gear Grid (Can't use Death Pact)");
+    character.abilities.push(
+      '<a href="./data/Scout.png">Scout Gear Grid</a> (Can\'t use Death Pact)'
+    );
   }
+
+  character.title = `${honorific} ${character.title}`;
 
   return character;
 }
@@ -866,7 +916,7 @@ function generateSettlementDetails(selectedTier: number): SettlementInfo {
   };
 
   settlement.maxSurvival = selectedTier * 2 + 1;
-  settlement.startingSurvival = selectedTier;
+  settlement.startingSurvival = selectedTier + 1;
 
   switch (selectedTier) {
     case 1:
@@ -881,6 +931,12 @@ function generateSettlementDetails(selectedTier: number): SettlementInfo {
 
       break;
     case 3:
+      settlement.weaponProficiencies = 2;
+      settlement.weaponMasteries = Math.floor(Math.random() * 2);
+      settlement.dash = true;
+      settlement.surge = true;
+      break;
+    case 4:
       settlement.weaponProficiencies = 2;
       settlement.weaponMasteries = Math.floor(Math.random() * 2);
       settlement.dash = true;
@@ -958,10 +1014,10 @@ export function getWeapon(selectedTier: number, type: string): string {
   else return "";
 }
 
-export function getArmour(selectedTier: number): string {
-  let armours = tiers[selectedTier].Items.Armour;
+export function getItem(selectedTier: number, key: keyof ItemsType): string {
+  let things = tiers[selectedTier].Items[key];
 
-  if (armours)
-    return formatItem(armours[Math.floor(Math.random() * armours?.length)]);
+  if (things)
+    return formatItem(things[Math.floor(Math.random() * things?.length)]);
   else return "";
 }

@@ -15,8 +15,9 @@ html {
   flex-wrap: wrap;
 }
 
-#endeavors {
-  margin-bottom: 2em;
+#rules {
+  margin-bottom: 6em;
+  margin-left: 2em;
 }
 
 H1 {
@@ -38,7 +39,8 @@ button {
 }
 
 #armourSelect,
-#weaponSelect {
+#weaponSelect,
+#accessorySelect {
   margin: 0;
   margin-right: 0.5em;
 }
@@ -129,4 +131,10 @@ select {
 }
 #S3 {
   background-color: #262d85;
+}
+#S5 {
+  background-color: #26857e;
+}
+#S6 {
+  background-color: #4f2685;
 }

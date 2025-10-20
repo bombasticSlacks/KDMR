@@ -1590,6 +1590,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Core Box",
+    weaponType: ["Axe", "Spear"],
   },
   {
     name: "Muramasa",
@@ -1598,6 +1599,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Core Box",
+    weaponType: ["Katana"],
   },
   {
     name: "Thunder Maul",
@@ -1606,6 +1608,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Core Box",
+    weaponType: ["Club"],
   },
   {
     name: "Steel Sword",
@@ -1614,6 +1617,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Core Box",
+    weaponType: ["Sword"],
   },
   {
     name: "Steel Shield",
@@ -1638,6 +1642,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Dragon King",
+    weaponType: ["Spear"],
   },
   {
     name: "Hazmat Shield",
@@ -1646,6 +1651,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Dragon King",
+    weaponType: ["Shield"],
   },
   {
     name: "Regal Edge",
@@ -1654,6 +1660,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Dragon King",
+    weaponType: ["Sword"],
   },
   {
     name: "Dragon Vestments",
@@ -1678,6 +1685,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Lion Knight",
+    weaponType: ["Katar"],
   },
   {
     name: "Lion Knight's Right Claw",
@@ -1686,6 +1694,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Lion Knight",
+    weaponType: ["Katar"],
   },
   {
     name: "Both Lion Knight Claws",
@@ -1694,6 +1703,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Lion Knight",
+    weaponType: ["Katar"],
   },
   {
     name: "Lion Knight Badge",
@@ -1718,6 +1728,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Flower Knight",
+    weaponType: ["Grand"],
   },
   {
     name: "Flower Knight Helm",
@@ -1758,6 +1769,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Spidicules",
+    weaponType: ["Sword"],
   },
   {
     name: "Reverberating Lantern",
@@ -1838,6 +1850,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Green Armor",
+    weaponType: ["Sword"],
   },
   {
     name: "Dormant Twilight Cloak",
@@ -1870,6 +1883,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "White Speaker",
+    weaponType: ["Dagger"],
   },
   {
     name: "Leather Brassiere (With Lantern Armor)",
@@ -1902,6 +1916,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Black Knight",
+    weaponType: ["Grand"],
   },
   {
     name: "Worn Strafing Bow",
@@ -1910,6 +1925,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Red Witches",
+    weaponType: ["Bow"],
   },
   {
     name: "Worn Seeking Bow",
@@ -1918,6 +1934,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Red Witches",
+    weaponType: ["Bow"],
   },
   {
     name: "Worn Brawling Bow",
@@ -1926,6 +1943,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Red Witches",
+    weaponType: ["Bow", "Katar"],
   },
   {
     name: "Portable Waterphone",
@@ -1942,6 +1960,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Black Knight",
+    weaponType: ["Bow"],
   },
   {
     name: "Wrath",
@@ -1950,6 +1969,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Black Knight",
+    weaponType: ["Sword"],
   },
   {
     name: "Magnum Knives",
@@ -1958,6 +1978,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Black Knight",
+    weaponType: ["Dagger"],
   },
   {
     name: "Fellbrandt",
@@ -1966,6 +1987,7 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Black Knight",
+    weaponType: ["Grand"],
   },
   {
     name: "Everburn",

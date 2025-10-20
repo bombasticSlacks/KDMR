@@ -20,14 +20,6 @@
                 <button type="submit">Load</button>
             </div>
         </form>
-        <h3>Rules:</h3>
-        <li>If anything during camp causes a survivor to not be able to depart (or die), perform the random action
-            again.
-        </li>
-        <li>All gear in "They Carry" is not assigned until camp phase ends (this includes cursed gear).</li>
-        <li>Specializations and masteries are assigned to specific survivors before departure.</li>
-        <li>Custom Scout gear grids <a href="./data/Scout.png"">here</a> original idea for 6 player rules from <a href="
-                https://www.patreon.com/posts/fens-2025-5-and-138012334">Fen</a> who you can support on Patreon.</li>
     </div>
     <div id="title">
         <h1>Nomads:</h1>
@@ -53,8 +45,12 @@
                     <label for="2">Survivors who command fire</label>
                 </div>
                 <div>
-                    <input title="Anything goes" type="radio" id="3" name="tier" value="3" />
-                    <label for="3">Veterans with an assortment of gear</label>
+                    <input title="Powerful Survivors" type="radio" id="3" name="tier" value="3" />
+                    <label for="3">Experts with an assortment of gear</label>
+                </div>
+                <div>
+                    <input title="Anything Goes" type="radio" id="4" name="tier" value="4" />
+                    <label for="4">Champions from their settlements</label>
                 </div>
                 <div class="flex question">
                     <p>How many sit around the fire?</p>
@@ -69,23 +65,21 @@
                 </div>
             </fieldset>
         </form>
-
-        <div id="gear" class="info">
-            <h2>They Carry</h2>
-            <div id="gearDetails"></div>
-        </div>
-        <div id="monster" class="info">
-            <h2 id="huntOr">They Hunt</h2>
-            <div id="monsterDetails"></div>
-        </div>
         <div id="characters" class="info">
             <h2>They Are</h2>
             <div id="survivorDetails"></div>
         </div>
-
+        <div id="gear" class="info">
+            <h2>They Carry</h2>
+            <div id="gearDetails"></div>
+        </div>
         <div id="settlement" class="info">
             <h2>Their Camp Provides</h2>
             <div id="settlementDetails"></div>
+        </div>
+        <div id="monster" class="info">
+            <h2 id="huntOr">They Hunt</h2>
+            <div id="monsterDetails"></div>
         </div>
     </div>
     <h1>You Each May Endeavor At Camp Before Departing: ✪✪✪✪</h1>
@@ -142,7 +136,7 @@
             <p>Choose One:</p>
             <ul>
                 <li>Obtain a copy of a paired weapon already in camp</li>
-                <li>Sacrifice a weapon to obtain another non-rare weapon</li>
+                <li>Sacrifice a weapon to obtain another weapon</li>
                 <div class="flex inline">
                     <select id="weaponSelect"></select>
                     <p id="weaponResult"></p>
@@ -151,6 +145,11 @@
                 <div class="flex inline">
                     <button id="armourSelect">New Armour</button>
                     <p id="armourResult"></p>
+                </div>
+                <li>Sacrifice up to 3 non-armour, non-weapon gear pieces to obtain new ones</li>
+                <div class="flex inline">
+                    <button id="accessorySelect">New Gear</button>
+                    <p id="accessoryResult"></p>
                 </div>
             </ul>
         </div>
@@ -180,9 +179,25 @@
             </ul>
         </div>
     </div>
+    <div id="rules">
+        <h3>Rules:</h3>
+        <li>If anything during camp causes a survivor to not be able to depart (or die), perform the random action
+            again.
+        </li>
+        <li>All gear in "They Carry" is not assigned until camp phase ends (this includes cursed gear).</li>
+        <li>Specializations and masteries are assigned to specific survivors before departure.</li>
+        <li>Custom Scout gear grids <a
+                href="./data/Scout.png"">here</a>, however the default grid may also be used. Original idea for 6 player rules from <a href="
+                https://www.patreon.com/posts/fens-2025-5-and-138012334">Fen</a> who you can support on Patreon.</li>
+        <li>Follow standard rules for showdowns, including a hunt phase for quarries.</li>
+        <li>Character milestones happen normally, ignore settlement abilities from bold, and insight.</li>
+    </div>
     <footer>
         <button id="optionsButton">Options</button>
-        Built From: <a href="https://github.com/bombasticSlacks/KDMR">https://github.com/bombasticSlacks/KDMR</a>
+        Expansion by <a href="https://github.com/bombasticSlacks/">bombasticSlacks</a> |
+        Built from: <a href="https://github.com/bombasticSlacks/KDMR">https://github.com/bombasticSlacks/KDMR</a> |
+        6 player rules adapted from <a href="https://www.patreon.com/posts/fens-2025-5-and-138012334">Fen</a> |
+        Report bugs <a href="https://github.com/bombasticSlacks/KDMR/issues">here</a>
 
     </footer>
 </body>
