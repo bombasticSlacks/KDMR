@@ -64,6 +64,16 @@ button {
   max-width: 30%;
 }
 
+#generator,
+.event {
+  border: solid;
+  border-radius: 1em;
+  width: fit-content;
+  padding: 2em;
+  margin: 1em;
+  max-width: 25%;
+}
+
 #optionsForm {
   width: 50%;
 }
@@ -104,6 +114,10 @@ fieldset {
 
 .flavour {
   font-style: italic;
+}
+
+ul {
+  padding-inline-start: 1em;
 }
 
 footer {
@@ -155,4 +169,24 @@ select {
 }
 #S6 {
   background-color: #4f2685;
+}
+
+/* Small Devices, Tablets */
+@media screen and (max-width: 720px) {
+  #details,
+  #endeavors,
+  #survivorDetails,
+  .flex {
+    display: block;
+  }
+
+  #options,
+  .expac,
+  #generator,
+  .info,
+  #settlement,
+  .event {
+    width: 100%;
+    max-width: 80%;
+  }
 }
