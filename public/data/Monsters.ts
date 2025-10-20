@@ -54,7 +54,12 @@ export const monsters = [
     nemesis: true,
     expansion: "Lion Knight",
   },
-  { name: "Manhunter", tier: [1, 2, 3], nemesis: true, expansion: "Manhunter" },
+  {
+    name: "Manhunter",
+    tier: [1, 2, 3, 4],
+    nemesis: true,
+    expansion: "Manhunter",
+  },
   {
     name: "Slenderman",
     tier: [1, 2, 3],
