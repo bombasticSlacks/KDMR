@@ -26,8 +26,11 @@ const armourSelect = document.querySelector("#armourSelect");
 const armourResult = document.querySelector("#armourResult");
 const accessorySelect = document.querySelector("#accessorySelect");
 const accessoryResult = document.querySelector("#accessoryResult");
+const endeavorCount = document.querySelector("#endeavorCount");
 
 let currentTier = 0;
+
+const endeavorTitle = "🜂 You Each May Endeavor At Camp Before Departing: ";
 
 // gen expansion list
 if (expansionList) expansionList.innerHTML = generateExpansionList();
@@ -84,6 +87,15 @@ if (generator) {
     // generate weapon list for replacement
     if (weaponSelect) {
       weaponSelect.innerHTML = formatWeaponList(Number(data.get("tier")));
+    }
+
+    // update endeavor count if scouts present
+    if (endeavorCount) {
+      let stars = "";
+      for (let i = 0; i < Number(data.get("count")); i++) {
+        stars += "✪";
+      }
+      endeavorCount.innerHTML = endeavorTitle + stars;
     }
 
     event.preventDefault();
