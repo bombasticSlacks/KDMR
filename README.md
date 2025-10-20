@@ -1,10 +1,17 @@
-# KDM Randomizer
+# Nomads
 
-Randomizes battles to do in KDM
+Survivors sit around a fire in the plain of faces, the camp site is well organized and reeks of vile burning rubber. They either hunt or are hunted. 
+
+For 1-6 players, Nomad allows you to randomize a hunt against a monster. Survivors will have pre-generated stats, abilities, a list of gear to distribute amongst yourself. Perfect for small 1 off sessions of the best boss battler around. 
+
+Tries to recreate the experience of endeavouring, designing effective loadouts, hunting, and the showdown with a streamlined camp phase, and full hunt and showdown phases.
+
+
+Full expansion is available and hosted at https://kdmr.bombasticgames.com/ as a lightweight website, no printing required.
 
 ## Features
 
-- Select a tier of characters and it will generate you survivors, gear and a monster/nemesis
+- Select a tier of characters and it will generate you survivors, gear, and a monster/nemesis
 - Sometimes generates unique survivors from different expansions (Saviors, twilight nights, constellation havers)
 - Set which expansions you own in options
 - Stuff to do around camp before departure
@@ -23,6 +30,14 @@ Randomizes battles to do in KDM
 - 2 Have heat
 - 3 Have higher tier monster gear
 - 4 Have the best of the best
+
+### Generation Info
+- Provide 4-5 dedicated weapons of either current tier or last tier.
+- Provide 4 full armour sets (at tier 0-1 this includes waist cloth), armour can come from current tier or any prior.
+- Provide non-weapon, non-armour, in a quantity based on tier (1,3,5,10,10). These items can come from current tier or any prior tier (things like grease are never bad).
+- Higher tiers (2+) get one dedicated HL/AI manipulation item and one dedicated tank item.
+- Rare items are half as likely to appear as non-rare gear.
+- In tier 0 bone weapons are provided over founding stones so people dont just throw them.
 
 ## Todo
 
