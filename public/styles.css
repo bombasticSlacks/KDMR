@@ -16,6 +16,11 @@ html {
 }
 
 #rules {
+  margin-left: 2em;
+  margin-bottom: 2em;
+}
+
+#expansions {
   margin-bottom: 6em;
   margin-left: 2em;
 }
@@ -56,6 +61,19 @@ button {
   width: fit-content;
   padding: 2em;
   margin: 1em;
+  max-width: 30%;
+}
+
+#optionsForm {
+  width: 50%;
+}
+
+.expac {
+  border: solid;
+  border-radius: 1em;
+  width: fit-content;
+  padding: 0.3em;
+  margin: 0.1em;
   max-width: 30%;
 }
 

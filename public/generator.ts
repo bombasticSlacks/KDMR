@@ -993,7 +993,7 @@ export function generateExpansionList(): string {
 
   for (const e of sortedExpansions.sort()) {
     const id = e.replace(/ /g, "_");
-    html += `<div><input type="checkbox" id="${id}" name="${e}" checked /><label for="${id}">${e}</label></div>\n`;
+    html += `<div class="expac"><input type="checkbox" id="${id}" name="${e}" checked /><label for="${id}">${e}</label></div>\n`;
   }
   return html;
 }
