@@ -47,7 +47,7 @@ export const monsters = [
     nemesis: false,
     expansion: "Flower Knight",
   },
-  { name: "Lion God", tier: [3, 3, 3], nemesis: false, expansion: "Lion God" },
+  { name: "Lion God", tier: [3, 4, 4], nemesis: false, expansion: "Lion God" },
   {
     name: "Lion Knight",
     tier: [1, 2, 3],
