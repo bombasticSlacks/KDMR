@@ -60,8 +60,12 @@ if (generator) {
 
     if (survivors) {
       let survivorHTML = "";
+      let i = 1;
       for (const s of challenge.survivors) {
-        survivorHTML += `<div class="character">${formatSurvivor(s)}</div>`;
+        survivorHTML += `<div id="S${i}" class="settlementAttribute">${formatSurvivor(
+          s
+        )}</div>`;
+        i++;
       }
       survivors.innerHTML = survivorHTML;
     }

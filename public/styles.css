@@ -120,3 +120,13 @@ select {
 .inline {
   padding: 0.5em;
 }
+
+#S1 {
+  background-color: #85262d;
+}
+#S2 {
+  background-color: #2d8526;
+}
+#S3 {
+  background-color: #262d85;
+}

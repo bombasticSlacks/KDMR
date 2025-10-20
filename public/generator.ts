@@ -917,7 +917,7 @@ function characterHelper(
   abilities: string,
   title: string
 ): string {
-  return `<div class=settlementAttribute><h3 class=settlementTitle>${title}</h3><p class=settlementValue>${val}</p><p class=settlementValue>${abilities}</p></div>`;
+  return `<h3 class=settlementTitle>${title}</h3><p class=settlementValue>${val}</p><p class=settlementValue>${abilities}</p>`;
 }
 
 function settlementHelper(title: string, val: number): string {
