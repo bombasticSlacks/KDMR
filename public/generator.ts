@@ -726,9 +726,6 @@ function generateSurvivor(
     } else if (val === 20) {
       character.stats.luck += 1;
     }
-
-    // chance for a SFA
-    if (roll() > 9) character.stats.sfa = 1;
   }
 
   // Age 2
@@ -745,9 +742,6 @@ function generateSurvivor(
     } else if (val === 20) {
       character.stats.speed += 1;
     }
-
-    // chance for a SFA
-    if (roll() > 9) character.stats.sfa = 1;
   }
 
   // Age 3
@@ -764,9 +758,6 @@ function generateSurvivor(
     } else if (val === 20) {
       character.stats.strength += 3;
     }
-
-    // chance for a SFA
-    if (roll() > 9) character.stats.sfa = 1;
   }
 
   // Age 4
@@ -783,9 +774,11 @@ function generateSurvivor(
     } else if (val === 20) {
       character.stats.choose += 1;
     }
+  }
 
-    // chance for a SFA
-    if (roll() > 9) character.stats.sfa = 1;
+  // secret fighting arts, small chance based on tier
+  if (Math.random() * 100 + 1 > 100 - selectedTier) {
+    character.stats.sfa = 1;
   }
 
   // Bold
