@@ -19,6 +19,13 @@ interface Challenge {
   settlement: SettlementInfo | null;
 }
 
+interface Options {
+  highMult: number;
+  lowMult: number;
+  itemMult: number;
+  specialMult: number;
+}
+
 interface Monster {
   name: string;
   tier: number[];
@@ -144,7 +151,20 @@ const T4: tier = {
   Weapons: new Map<string, Item[]>(),
   Monsters: [],
 };
-const tiers: tier[] = [T0, T1, T2, T3, T4];
+
+const T5: tier = {
+  Items: {
+    Armour: [],
+    Accessory: [],
+    Support: [],
+    Weapon: [],
+    Tank: [],
+    Blacklist: [],
+  },
+  Weapons: new Map<string, Item[]>(),
+  Monsters: [],
+};
+const tiers: tier[] = [T0, T1, T2, T3, T4, T5];
 
 const expansions: Set<string> = new Set<string>();
 
@@ -155,7 +175,7 @@ load([]);
 
 export function load(expansionList: string[]) {
   // make sure the arrays are empty
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     tiers[i] = {
       Items: {
         Armour: [],
@@ -226,7 +246,7 @@ export function load(expansionList: string[]) {
           tiers[i.tier].Items.Weapon.push(i as Item);
           if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
 
-          if (i.tier !== 4) {
+          if (i.tier !== 5) {
             tiers[i.tier + 1].Items.Weapon.push(i as Item);
             if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
           }
@@ -239,7 +259,7 @@ export function load(expansionList: string[]) {
             } else {
               tiers[i.tier].Weapons.get(type)?.push({ ...i, rare: false });
             }
-            if (i.tier !== 4) {
+            if (i.tier !== 5) {
               if (!tiers[i.tier + 1].Weapons.has(type)) {
                 // add weapons to the list for replacement
                 tiers[i.tier + 1].Weapons.set(type, [{ ...i, rare: false }]);
@@ -260,7 +280,7 @@ export function load(expansionList: string[]) {
     }
   }
 
-  console.log(tiers);
+  //console.log(tiers);
   // Create the storage for all Monsters
   for (const i of monsters) {
     if (
@@ -287,7 +307,8 @@ export function load(expansionList: string[]) {
 
 export function generateTier(
   selectedTier: number,
-  survivors: number = 4
+  survivors: number = 4,
+  options: Options
 ): Challenge {
   const challenge: Challenge = {
     items: [],
@@ -295,60 +316,58 @@ export function generateTier(
     settlement: null,
     survivors: [],
   };
-  // generate 4 armour sets and 4 weapons
-  challenge.items.push(generateItem(selectedTier, "Armour"));
-  challenge.items.push(generateItem(selectedTier, "Armour"));
-  challenge.items.push(generateItem(selectedTier, "Armour"));
-  challenge.items.push(generateItem(selectedTier, "Armour"));
-  challenge.items.push(generateItem(selectedTier, "Weapon"));
-  challenge.items.push(generateItem(selectedTier, "Weapon"));
-  challenge.items.push(generateItem(selectedTier, "Weapon"));
-  challenge.items.push(generateItem(selectedTier, "Weapon"));
+
+  const gearCounts = {
+    Armour: 4,
+    Weapon: 4,
+    Accessory: 1,
+    Tank: 0,
+    Support: 0,
+    Blacklist: 0,
+  };
 
   switch (selectedTier) {
     case 0:
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      // already configured
       break;
     case 1:
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
+      gearCounts.Accessory = 3;
       break;
     case 2:
-      challenge.items.push(generateItem(selectedTier, "Weapon"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Support"));
-      challenge.items.push(generateItem(selectedTier, "Tank"));
+      gearCounts.Weapon = 5;
+      gearCounts.Accessory = 5;
+      gearCounts.Support = 1;
+      gearCounts.Tank = 1;
       break;
     default:
-      challenge.items.push(generateItem(selectedTier, "Weapon"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Accessory"));
-      challenge.items.push(generateItem(selectedTier, "Support"));
-      challenge.items.push(generateItem(selectedTier, "Tank"));
+      gearCounts.Weapon = 5;
+      gearCounts.Accessory = 10;
+      gearCounts.Support = 1;
+      gearCounts.Tank = 1;
       break;
   }
+
+  for (const t of Object.keys(tiers[0].Items)) {
+    for (
+      let i = 0;
+      i < Math.round(gearCounts[t as keyof ItemsType] * options.itemMult);
+      i++
+    ) {
+      challenge.items.push(
+        generateItem(selectedTier, t as keyof ItemsType, options)
+      );
+    }
+  }
+
   challenge.monster = generateMonster(selectedTier, survivors);
 
-  challenge.survivors.push(generateSurvivor(selectedTier));
-  challenge.survivors.push(generateSurvivor(selectedTier));
-  challenge.survivors.push(generateSurvivor(selectedTier));
-  challenge.survivors.push(generateSurvivor(selectedTier));
+  challenge.survivors.push(generateSurvivor(selectedTier, options));
+  challenge.survivors.push(generateSurvivor(selectedTier, options));
+  challenge.survivors.push(generateSurvivor(selectedTier, options));
+  challenge.survivors.push(generateSurvivor(selectedTier, options));
 
   for (let i = 4; i < survivors; i++) {
-    challenge.survivors.push(generateSurvivor(selectedTier, true));
+    challenge.survivors.push(generateSurvivor(selectedTier, options, true));
   }
 
   challenge.settlement = generateSettlementDetails(selectedTier);
@@ -360,32 +379,44 @@ function roll(): number {
   return Math.floor(Math.random() * 10) + 1;
 }
 
-function generateItem(selectedTier: number, type: keyof ItemsType): Item {
-  //10% chance to roll up or down a tier
+function generateItem(
+  selectedTier: number,
+  type: keyof ItemsType,
+  options: Options
+): Item {
+  //chance to roll up or down a tier
+  //if they exist
   let itemTier = selectedTier;
-
   let roll = Math.random();
-  while (roll < 0.1 || roll > 0.9) {
-    if (roll > 0.9) itemTier++;
-    if (roll < 0.1) itemTier--;
-
-    roll = Math.random();
+  if (roll > 1 - options.highMult) {
+    if (tiers[Math.min(itemTier + 1, 5)].Items[type].length !== 0) itemTier++;
+  } else if (roll < options.lowMult) {
+    if (tiers[Math.max(itemTier - 1, 0)].Items[type].length !== 0) itemTier--;
   }
-
   //bound our values
-  if (itemTier > 4) itemTier = 4;
+  if (itemTier > 5) itemTier = 5;
   if (itemTier < 0) itemTier = 0;
 
   if (tiers[itemTier].Items[type].length === 0) {
-    return {
-      name: "Founding Stone",
-      type: ["Accessory"],
-      tier: 0,
-      location: "Starter",
-      rare: false,
-      expansion: "Core Box",
-      weaponType: [],
-    };
+    if (itemTier === 0) {
+      return {
+        name: "Founding Stone",
+        type: ["Accessory"],
+        tier: 0,
+        location: "Starter",
+        rare: false,
+        expansion: "Core Box",
+        weaponType: [],
+      };
+    }
+
+    // otherwise try to find something lower tier
+    return generateItem(itemTier - 1, type, {
+      highMult: 0,
+      lowMult: 0,
+      itemMult: 1,
+      specialMult: 0,
+    });
   }
 
   // find the random index
@@ -403,6 +434,15 @@ function generateMonster(
   selectedTier: number,
   survivors: number = 4
 ): MonsterInfo {
+  // make sure something exists in the tier
+  if (tiers[selectedTier].Monsters.length === 0) {
+    return {
+      attributes: [],
+      name: "No Monster In Tier",
+      nemesis: true,
+      tier: -1,
+    };
+  }
   // find the random index
   const entry = Math.floor(Math.random() * tiers[selectedTier].Monsters.length);
 
@@ -427,6 +467,7 @@ function generateMonster(
 // generate a player with ages completed
 function generateSurvivor(
   selectedTier: number,
+  options: Options,
   scout?: boolean
 ): CharacterInfo {
   const character: CharacterInfo = {
@@ -522,7 +563,8 @@ function generateSurvivor(
   }
 
   // check for a unique survivor
-  if (selectedTier > 0 && !scout && Math.random() > 0.95) {
+  console.log(options.specialMult);
+  if (selectedTier > 0 && !scout && Math.random() > 1 - options.specialMult) {
     //determine the survivor type
     const options = ["Twilight", "Savior"];
 
@@ -915,30 +957,25 @@ function generateSettlementDetails(selectedTier: number): SettlementInfo {
     dash: false,
   };
 
-  settlement.maxSurvival = selectedTier * 2 + 1;
+  settlement.maxSurvival = selectedTier * 2 + 2;
   settlement.startingSurvival = selectedTier + 1;
 
   switch (selectedTier) {
+    case 0:
+      // get nothing
+      break;
     case 1:
-      settlement.weaponProficiencies = 1;
-      if (Math.random() > 0.5) settlement.dash = true;
-      if (Math.random() > 0.5) settlement.surge = true;
+      if (Math.random() > 0.8) settlement.dash = true;
+      if (Math.random() > 0.8) settlement.surge = true;
       break;
     case 2:
       settlement.weaponProficiencies = Math.floor(Math.random() * 3) + 1;
       if (Math.random() > 0.2) settlement.dash = true;
       if (Math.random() > 0.2) settlement.surge = true;
-
       break;
-    case 3:
-      settlement.weaponProficiencies = 2;
-      settlement.weaponMasteries = Math.floor(Math.random() * 2);
-      settlement.dash = true;
-      settlement.surge = true;
-      break;
-    case 4:
-      settlement.weaponProficiencies = 2;
-      settlement.weaponMasteries = Math.floor(Math.random() * 2);
+    default:
+      settlement.weaponMasteries = Math.floor(Math.random() * 3);
+      settlement.weaponProficiencies = 4 - settlement.weaponMasteries;
       settlement.dash = true;
       settlement.surge = true;
       break;

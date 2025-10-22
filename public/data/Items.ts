@@ -634,6 +634,20 @@ export const items: Item[] = [
     expansion: "Dragon King",
   },
   {
+    name: "Rolling Armor (non calcified)",
+    type: ["Armour"],
+    tier: 3,
+    location: "Dung Beetle Knight Gear",
+    expansion: "Dung Beetle Knight",
+  },
+  {
+    name: "Rolling Armor (calcified)",
+    type: ["Armour"],
+    tier: 4,
+    location: "Dung Beetle Knight Gear",
+    expansion: "Dung Beetle Knight",
+  },
+  {
     name: "DBK Errant Badge",
     type: ["Accessory"],
     tier: 3,
@@ -1830,7 +1844,7 @@ export const items: Item[] = [
   {
     name: "Green Armor",
     type: ["Armour"],
-    tier: 4,
+    tier: 5,
     location: "Rare Gear",
     rare: true,
     expansion: "Green Armor",
@@ -1838,7 +1852,7 @@ export const items: Item[] = [
   {
     name: "Fetosaurus",
     type: ["Tank"],
-    tier: 4,
+    tier: 5,
     location: "Rare Gear",
     rare: true,
     expansion: "Green Armor",
@@ -1846,7 +1860,7 @@ export const items: Item[] = [
   {
     name: "Griswaldo",
     type: ["Weapon"],
-    tier: 4,
+    tier: 5,
     location: "Rare Gear",
     rare: true,
     expansion: "Green Armor",
@@ -2004,5 +2018,13 @@ export const items: Item[] = [
     location: "Rare Gear",
     rare: true,
     expansion: "Black Knight",
+  },
+  {
+    name: "Regal Armor",
+    type: ["Blacklist"],
+    tier: 2,
+    location: "Rare Gear",
+    rare: true,
+    expansion: "Community Edition",
   },
 ];

@@ -28,6 +28,11 @@ const accessorySelect = document.querySelector("#accessorySelect");
 const accessoryResult = document.querySelector("#accessoryResult");
 const endeavorCount = document.querySelector("#endeavorCount");
 
+const lowMult = document.querySelector("#lowMult");
+const highMult = document.querySelector("#highMult");
+const itemMult = document.querySelector("#itemMult");
+const specialMult = document.querySelector("#specialMult");
+
 let currentTier = 0;
 
 const endeavorTitle = "🜂 You Each May Endeavor At Camp Before Departing: ";
@@ -35,16 +40,24 @@ const endeavorTitle = "🜂 You Each May Endeavor At Camp Before Departing: ";
 // gen expansion list
 if (expansionList) expansionList.innerHTML = generateExpansionList();
 
-if (generator) {
+if (generator && lowMult && highMult && itemMult && specialMult) {
   generator.addEventListener("submit", (event) => {
     if (weaponResult) weaponResult.innerHTML = "";
     const data = new FormData(generator);
 
     currentTier = Number(data.get("tier"));
 
+    const gearOptions = {
+      highMult: (highMult as any).value,
+      lowMult: (lowMult as any).value,
+      itemMult: (itemMult as any).value,
+      specialMult: (specialMult as any).value,
+    };
+
     const challenge = generateTier(
       Number(data.get("tier")),
-      Number(data.get("count"))
+      Number(data.get("count")),
+      gearOptions
     );
 
     if (monster && challenge.monster && hunt) {
