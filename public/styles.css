@@ -15,12 +15,13 @@ html {
   flex-wrap: wrap;
 }
 
-#rules {
+#rules,
+#expansions {
   margin-left: 2em;
   margin-bottom: 2em;
 }
 
-#expansions {
+#resources {
   margin-bottom: 6em;
   margin-left: 2em;
 }

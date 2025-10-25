@@ -8,7 +8,9 @@ import {
   formatWeaponList,
   getWeapon,
   getItem,
+  formatItems,
 } from "./generator.js";
+import { generateScribe } from "./scribe.js";
 
 const generator = document.querySelector("#generator") as HTMLFormElement;
 const optionsForm = document.querySelector("#optionsForm") as HTMLFormElement;
@@ -60,6 +62,8 @@ if (generator && lowMult && highMult && itemMult && specialMult) {
       gearOptions
     );
 
+    //generateScribe(challenge);
+
     if (monster && challenge.monster && hunt) {
       if (challenge.monster.nemesis) {
         hunt.innerHTML = `They Are Hunted By`;
@@ -88,11 +92,7 @@ if (generator && lowMult && highMult && itemMult && specialMult) {
       survivors.innerHTML = survivorHTML;
     }
 
-    let gearHTML = "";
-    for (const i of challenge.items) {
-      gearHTML += `<div class="gear"> ${formatItem(i)} </div>`;
-    }
-    if (gear) gear.innerHTML = gearHTML;
+    if (gear) gear.innerHTML = formatItems(challenge.items);
 
     if (settlement && challenge.settlement)
       settlement.innerHTML = formatSettlementDetails(challenge.settlement);
@@ -157,6 +157,12 @@ if (armourResult && armourSelect) {
 
 if (accessoryResult && accessorySelect) {
   accessorySelect.addEventListener("click", (event) => {
-    accessoryResult.innerHTML = getItem(currentTier, "Accessory");
+    accessoryResult.innerHTML = `Choose 1: ${getItem(
+      currentTier,
+      "Accessory"
+    )}, ${getItem(currentTier, "Accessory")}, ${getItem(
+      currentTier,
+      "Accessory"
+    )} `;
   });
 }

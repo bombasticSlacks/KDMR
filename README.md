@@ -1,11 +1,10 @@
 # Nomads
 
-Survivors sit around a fire in the plain of faces, the camp site is well organized and reeks of vile burning rubber. They either hunt or are hunted. 
+Survivors sit around a fire in the plain of faces, the camp site is well organized and reeks of vile burning rubber. They either hunt or are hunted.
 
-For 1-6 players, Nomad allows you to randomize a hunt against a monster. Survivors will have pre-generated stats, abilities, a list of gear to distribute amongst yourself. Perfect for small 1 off sessions of the best boss battler around. 
+For 1-6 players, Nomad allows you to randomize a hunt against a monster. Survivors will have pre-generated stats, abilities, a list of gear to distribute amongst yourself. Perfect for small 1 off sessions of the best boss battler around.
 
 Tries to recreate the experience of endeavouring, designing effective loadouts, hunting, and the showdown with a streamlined camp phase, and full hunt and showdown phases.
-
 
 Full expansion is available and hosted at https://kdmr.bombasticgames.com/ as a lightweight website, no printing required.
 
@@ -32,6 +31,7 @@ Full expansion is available and hosted at https://kdmr.bombasticgames.com/ as a 
 - 4 Have the best of the best
 
 ### Generation Info
+
 - Provide 4-5 dedicated weapons of either current tier or last tier.
 - Provide 4 full armour sets (at tier 0-1 this includes waist cloth), armour can come from current tier or any prior.
 - Provide non-weapon, non-armour, in a quantity based on tier (1,3,5,10,10). These items can come from current tier or any prior tier (things like grease are never bad).
@@ -39,7 +39,7 @@ Full expansion is available and hosted at https://kdmr.bombasticgames.com/ as a 
 - Rare items are half as likely to appear as non-rare gear.
 - In tier 0 bone weapons are provided over founding stones so people dont just throw them.
 
-## Todo
+## Todo (not in order of priority)
 
 - Chance for wanderers.
 - Gamblers Chest
@@ -49,3 +49,8 @@ Full expansion is available and hosted at https://kdmr.bombasticgames.com/ as a 
 - Frogdog
 - Add Vignette / Black Knight characters / grids
 - Other specialty characters from white boxes like Percival, Fade, Aya
+- Nomad hunt events (Similar to GC Arc and Scout events)
+- Tracking for Scout Tablets
+- May need 1 more tier for things like The King...
+- Legendary Monster Hunts
+- Vignette Fights

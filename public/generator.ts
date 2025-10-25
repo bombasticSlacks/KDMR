@@ -12,7 +12,7 @@ interface Item {
   weaponType?: string[];
 }
 
-interface Challenge {
+export interface Challenge {
   monster: MonsterInfo | null;
   items: Item[];
   survivors: CharacterInfo[];
@@ -31,6 +31,7 @@ interface Monster {
   tier: number[];
   nemesis: boolean;
   expansion: string;
+  attributes: string;
 }
 
 interface MonsterInfo {
@@ -47,6 +48,7 @@ interface ItemsType {
   Weapon: Item[];
   Tank: Item[];
   Blacklist: Item[];
+  Scout: Item[];
 }
 
 interface SettlementInfo {
@@ -95,6 +97,7 @@ const T0: tier = {
     Weapon: [],
     Tank: [],
     Blacklist: [],
+    Scout: [],
   },
   Weapons: new Map<string, Item[]>(),
   Monsters: [],
@@ -108,6 +111,7 @@ const T1: tier = {
     Weapon: [],
     Tank: [],
     Blacklist: [],
+    Scout: [],
   },
   Weapons: new Map<string, Item[]>(),
   Monsters: [],
@@ -121,6 +125,7 @@ const T2: tier = {
     Weapon: [],
     Tank: [],
     Blacklist: [],
+    Scout: [],
   },
   Weapons: new Map<string, Item[]>(),
   Monsters: [],
@@ -134,6 +139,7 @@ const T3: tier = {
     Weapon: [],
     Tank: [],
     Blacklist: [],
+    Scout: [],
   },
   Weapons: new Map<string, Item[]>(),
   Monsters: [],
@@ -147,6 +153,7 @@ const T4: tier = {
     Weapon: [],
     Tank: [],
     Blacklist: [],
+    Scout: [],
   },
   Weapons: new Map<string, Item[]>(),
   Monsters: [],
@@ -160,6 +167,7 @@ const T5: tier = {
     Weapon: [],
     Tank: [],
     Blacklist: [],
+    Scout: [],
   },
   Weapons: new Map<string, Item[]>(),
   Monsters: [],
@@ -184,6 +192,7 @@ export function load(expansionList: string[]) {
         Weapon: [],
         Tank: [],
         Blacklist: [],
+        Scout: [],
       },
       Weapons: new Map<string, Item[]>(),
       Monsters: [],
@@ -324,6 +333,7 @@ export function generateTier(
     Tank: 0,
     Support: 0,
     Blacklist: 0,
+    Scout: 0,
   };
 
   switch (selectedTier) {
@@ -428,6 +438,24 @@ function generateItem(
 export function formatItem(i: Item | null): string {
   if (i === null) return "";
   return `${i.name}(${i.location})`;
+}
+
+export function formatItems(items: Item[]): string {
+  // sort by location
+  items.sort((a, b) => {
+    if (a.location > b.location) return 1;
+    else if (a.location < b.location) return -1;
+    else if (a.name > b.name) return 1;
+    else if (a.name < b.name) return -1;
+    else return 0;
+  });
+
+  let gearHTML = "";
+  for (const i of items) {
+    gearHTML += `<div class="gear"> ${formatItem(i)} </div>`;
+  }
+
+  return gearHTML;
 }
 
 function generateMonster(

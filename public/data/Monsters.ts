@@ -53,6 +53,8 @@ export const monsters = [
     tier: [1, 2, 3],
     nemesis: true,
     expansion: "Lion Knight",
+    abilities:
+      "Roll 1d10: 1-5: Count as having black mask, 6-10: Count as having white mask",
   },
   {
     name: "Manhunter",
@@ -91,4 +93,18 @@ export const monsters = [
     nemesis: true,
     expansion: "Black Knight",
   },
+  {
+    name: "Smog Singers",
+    tier: [1, 2, 3],
+    nemesis: false,
+    expansion: "Gamblers Chest",
+  },
+  {
+    name: "Crimson Crocodile",
+    tier: [0, 2, 3],
+    nemesis: false,
+    expansion: "Gamblers Chest",
+  },
+  { name: "Frogdog", tier: [0, 2, 3], nemesis: false, expansion: "Frogdog" },
+  { name: "Bullfrog", tier: [4], nemesis: false, expansion: "Frogdog" },
 ];
