@@ -1914,7 +1914,7 @@ export const items: Item[] = [
     type: ["Scout"],
     tier: 2,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1922,7 +1922,7 @@ export const items: Item[] = [
     type: ["Blacklist"],
     tier: 1,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1930,7 +1930,7 @@ export const items: Item[] = [
     type: ["Scout"],
     tier: 2,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1938,7 +1938,7 @@ export const items: Item[] = [
     type: ["Accessory"],
     tier: 2,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1946,7 +1946,7 @@ export const items: Item[] = [
     type: ["Scout"],
     tier: 3,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1954,7 +1954,7 @@ export const items: Item[] = [
     type: ["Blacklist"],
     tier: 2,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1962,7 +1962,7 @@ export const items: Item[] = [
     type: ["Accessory"],
     tier: 1,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1970,7 +1970,7 @@ export const items: Item[] = [
     type: ["Accessory"],
     tier: 2,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {
@@ -1978,7 +1978,7 @@ export const items: Item[] = [
     type: ["Scout"],
     tier: 4,
     rare: false,
-    expansion: "Gambers Chest",
+    expansion: "Gamblers Chest",
     location: "Outskirts",
   },
   {

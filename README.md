@@ -42,15 +42,12 @@ Full expansion is available and hosted at https://kdmr.bombasticgames.com/ as a 
 ## Todo (not in order of priority)
 
 - Chance for wanderers.
-- Gamblers Chest
 - Scout Gear when generating scouts (GC)
 - Characters (GC)
 - Seed Patterns (GC)
-- Frogdog
 - Add Vignette / Black Knight characters / grids
 - Other specialty characters from white boxes like Percival, Fade, Aya
 - Nomad hunt events (Similar to GC Arc and Scout events)
-- Tracking for Scout Tablets
 - May need 1 more tier for things like The King...
 - Legendary Monster Hunts
 - Vignette Fights

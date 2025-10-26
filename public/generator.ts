@@ -229,13 +229,10 @@ export function load(expansionList: string[]) {
           }
           break;
         case "Armour":
-          // add almost all armour to every tier above as well
           if (i.tier > 0) {
-            for (let t = i.tier; t < 5; t++) {
-              tiers[t].Items.Armour.push(i as Item);
-              // make rare gear half as likely
-              if (!i.rare) tiers[t].Items.Armour.push(i as Item);
-            }
+            tiers[i.tier].Items.Armour.push(i as Item);
+            // make rare gear half as likely
+            if (!i.rare) tiers[i.tier].Items.Armour.push(i as Item);
           } else {
             // tier 0 is added to tier 1 as well not everyone has full armour sets early
             tiers[i.tier].Items.Armour.push(i as Item);
@@ -251,14 +248,8 @@ export function load(expansionList: string[]) {
           }
           break;
         case "Weapon":
-          // weapons can be used 1 tier above
           tiers[i.tier].Items.Weapon.push(i as Item);
           if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
-
-          if (i.tier !== 5) {
-            tiers[i.tier + 1].Items.Weapon.push(i as Item);
-            if (!i.rare) tiers[i.tier].Items.Weapon.push(i as Item);
-          }
 
           // add by tier to the weapons map
           for (const type of i.weaponType ?? []) {
@@ -267,17 +258,6 @@ export function load(expansionList: string[]) {
               tiers[i.tier].Weapons.set(type, [{ ...i, rare: false }]);
             } else {
               tiers[i.tier].Weapons.get(type)?.push({ ...i, rare: false });
-            }
-            if (i.tier !== 5) {
-              if (!tiers[i.tier + 1].Weapons.has(type)) {
-                // add weapons to the list for replacement
-                tiers[i.tier + 1].Weapons.set(type, [{ ...i, rare: false }]);
-              } else {
-                tiers[i.tier + 1].Weapons.get(type)?.push({
-                  ...i,
-                  rare: false,
-                });
-              }
             }
           }
           break;
@@ -289,7 +269,6 @@ export function load(expansionList: string[]) {
     }
   }
 
-  //console.log(tiers);
   // Create the storage for all Monsters
   for (const i of monsters) {
     if (
@@ -385,8 +364,9 @@ export function generateTier(
   return challenge;
 }
 
-function roll(): number {
-  return Math.floor(Math.random() * 10) + 1;
+function roll(n?: number): number {
+  if (!n) n = 10;
+  return Math.floor(Math.random() * n) + 1;
 }
 
 function generateItem(
@@ -397,15 +377,77 @@ function generateItem(
   //chance to roll up or down a tier
   //if they exist
   let itemTier = selectedTier;
-  let roll = Math.random();
-  if (roll > 1 - options.highMult) {
+  let valueRoll = Math.random();
+  if (valueRoll > 1 - options.highMult) {
     if (tiers[Math.min(itemTier + 1, 5)].Items[type].length !== 0) itemTier++;
-  } else if (roll < options.lowMult) {
+  } else if (valueRoll < options.lowMult) {
     if (tiers[Math.max(itemTier - 1, 0)].Items[type].length !== 0) itemTier--;
   }
   //bound our values
   if (itemTier > 5) itemTier = 5;
   if (itemTier < 0) itemTier = 0;
+
+  // armour and weapons stick around longer than other things
+  // chance for weapons to be 1 tier lower, chance for armour to be any tier with reduced chance.
+
+  if (type === "Armour" && options.lowMult > 0 && itemTier > 0) {
+    let tierTotal = 0;
+    for (let i = 0; i <= itemTier; i++) tierTotal += i ** 2;
+    const armourRoll = roll(tierTotal);
+
+    //quadratically higher chance of getting an higher tier armour, but always a chance for lower tier
+    if (armourRoll > 30) {
+      return generateItem(5, type, {
+        highMult: 0,
+        lowMult: 0,
+        itemMult: 1,
+        specialMult: 0,
+      });
+    } else if (armourRoll > 14) {
+      return generateItem(4, type, {
+        highMult: 0,
+        lowMult: 0,
+        itemMult: 1,
+        specialMult: 0,
+      });
+    } else if (armourRoll > 5) {
+      return generateItem(3, type, {
+        highMult: 0,
+        lowMult: 0,
+        itemMult: 1,
+        specialMult: 0,
+      });
+    } else if (armourRoll > 1) {
+      return generateItem(2, type, {
+        highMult: 0,
+        lowMult: 0,
+        itemMult: 1,
+        specialMult: 0,
+      });
+    } else {
+      return generateItem(1, type, {
+        highMult: 0,
+        lowMult: 0,
+        itemMult: 1,
+        specialMult: 0,
+      });
+    }
+  }
+
+  if (type === "Weapon" && options.lowMult > 0 && itemTier > 0) {
+    // if there are lower tier options pick one we rolled low
+    if (
+      roll() < 4 &&
+      tiers[Math.min(itemTier - 1, 5)].Items[type].length !== 0
+    ) {
+      return generateItem(itemTier - 1, type, {
+        highMult: 0,
+        lowMult: 0,
+        itemMult: 1,
+        specialMult: 0,
+      });
+    }
+  }
 
   if (tiers[itemTier].Items[type].length === 0) {
     if (itemTier === 0) {
@@ -591,7 +633,6 @@ function generateSurvivor(
   }
 
   // check for a unique survivor
-  console.log(options.specialMult);
   if (selectedTier > 0 && !scout && Math.random() > 1 - options.specialMult) {
     //determine the survivor type
     const options = ["Twilight", "Savior"];

@@ -9,7 +9,7 @@ export const monsters = [
   { name: "Antelope", tier: [1, 2, 3], nemesis: false, expansion: "Core Box" },
   { name: "Phoenix", tier: [2, 3, 4], nemesis: false, expansion: "Core Box" },
   { name: "Butcher", tier: [1, 2, 3], nemesis: true, expansion: "Core Box" },
-  { name: "Kings Man", tier: [1, 2, 3], nemesis: true, expansion: "Core Box" },
+  { name: "Kings Man", tier: [2, 3, 4], nemesis: true, expansion: "Core Box" },
   { name: "The Hand", tier: [2, 3, 4], nemesis: true, expansion: "Core Box" },
   {
     name: "The Watcher",
@@ -37,7 +37,7 @@ export const monsters = [
   },
   {
     name: "Dung Beetle Knight",
-    tier: [2, 3, 4],
+    tier: [3, 4, 4],
     nemesis: false,
     expansion: "Dung Beetle Knight",
   },
@@ -50,11 +50,11 @@ export const monsters = [
   { name: "Lion God", tier: [3, 4, 4], nemesis: false, expansion: "Lion God" },
   {
     name: "Lion Knight",
-    tier: [1, 2, 3],
+    tier: [2, 3, 3],
     nemesis: true,
     expansion: "Lion Knight",
     abilities:
-      "Roll 1d10: 1-5: Count as having black mask, 6-10: Count as having white mask",
+      "Roll 1d10, 1-5: Count as having black mask, 6-10: Count as having white mask (for the purposes of setup)",
   },
   {
     name: "Manhunter",
@@ -64,7 +64,7 @@ export const monsters = [
   },
   {
     name: "Slenderman",
-    tier: [1, 2, 3],
+    tier: [2, 3, 3],
     nemesis: true,
     expansion: "Slenderman",
   },
@@ -83,7 +83,7 @@ export const monsters = [
   { name: "Pariah", tier: [1, 2, 3], nemesis: true, expansion: "Pariah" },
   {
     name: "Red Witches",
-    tier: [1, 2, 4],
+    tier: [2, 3, 4],
     nemesis: true,
     expansion: "Red Witches",
   },
