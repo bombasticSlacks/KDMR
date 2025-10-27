@@ -858,7 +858,7 @@ function generateSurvivor(
     if (boldRoll <= 3) {
       // settlement
       character.abilities.push(
-        'Dependent: "If someone dies during the hunt phase, you may replace them in the showdown with a new survivor with no abilities or attributes"'
+        'Dependent: "If someone dies during the hunt phase, you may replace them in the showdown with a new survivor with no abilities or attributes. Treat them as though they were departing and then arriving."'
       );
 
       const val = roll();
